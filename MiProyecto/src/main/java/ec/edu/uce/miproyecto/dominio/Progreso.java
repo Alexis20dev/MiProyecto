@@ -1,4 +1,4 @@
-package Dominio;
+package ec.edu.uce.miproyecto.dominio;
 
 import java.util.Date;
 
