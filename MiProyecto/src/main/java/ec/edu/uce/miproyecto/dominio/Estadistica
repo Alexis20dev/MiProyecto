@@ -1,0 +1,73 @@
+package Dominio;
+
+public class estadistica {
+    private int idEstadistica;
+    private int aciertos;
+    private int fallos;
+    private double porcentaje;
+    private String nivel;
+
+
+    public int getIdEstadistica() {
+        return idEstadistica;
+    }
+
+    public void setIdEstadistica(int idEstadistica) {
+        this.idEstadistica = idEstadistica;
+    }
+
+    public int getAciertos() {
+        return aciertos;
+    }
+
+    public void setAciertos(int aciertos) {
+        this.aciertos = aciertos;
+    }
+
+    public int getFallos() {
+        return fallos;
+    }
+
+    public void setFallos(int fallos) {
+        this.fallos = fallos;
+    }
+
+    public double getPorcentaje() {
+        return porcentaje;
+    }
+
+    public void setPorcentaje(double porcentaje) {
+        this.porcentaje = porcentaje;
+    }
+
+    public String getNivel() {
+        return nivel;
+    }
+
+    public void setNivel(String nivel) {
+        this.nivel = nivel;
+    }
+
+
+    public estadistica() {
+    }
+
+    public estadistica(int idEstadistica, int aciertos, int fallos, double porcentaje, String nivel) {
+        this.idEstadistica = idEstadistica;
+        this.aciertos = aciertos;
+        this.fallos = fallos;
+        this.porcentaje = porcentaje;
+        this.nivel = nivel;
+    }
+
+    @Override
+    public String toString() {
+        return "estadistica{" +
+                "idEstadistica=" + idEstadistica +
+                ", aciertos=" + aciertos +
+                ", fallos=" + fallos +
+                ", porcentaje=" + porcentaje +
+                ", nivel='" + nivel + '\'' +
+                '}';
+    }
+}
