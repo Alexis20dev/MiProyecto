@@ -1,21 +1,27 @@
 package ec.edu.uce.miproyecto.dominio;
+    public String getNombre() {
+        return nombre;
+    }
 
-public class Concepto {
-    private String titulo;
-    private String explicacion;
-    private String ejemplo;
-    public Concepto(String titulo, String explicacion, String ejemplo) {
-        this.titulo = titulo;
-        this.explicacion = explicacion;
-        this.ejemplo = ejemplo;
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
     }
-    public String mostrarExplicacion() {
-        return explicacion;
+
+    public Concepto() {
     }
-    public String mostrarEjemplo() {
-        return ejemplo;
+
+    public Concepto(int idConcepto, String nombre, String descripcion) {
+        this.idConcepto = idConcepto;
+        this.nombre = nombre;
+        this.descripcion = descripcion;
     }
-    public String getTitulo() {
-        return titulo;
+
+    @Override
+    public String toString() {
+        return "Concepto{" +
+                "idConcepto=" + idConcepto +
+                ", nombre='" + nombre + '\'' +
+                ", descripcion='" + descripcion + '\'' +
+                '}';
     }
 }
