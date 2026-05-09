@@ -2,10 +2,8 @@ package ec.edu.uce.miproyecto.interfaz;
 import ec.edu.uce.miproyecto.dominio.*;
 import java.util.Scanner;
 public class MenuPrincipal {
-    private Scanner sc;
-    public MenuPrincipal() {
-        sc = new Scanner(System.in);
-    }
+    private final Scanner sc = new Scanner (System.in);
+
     public void mostrarMenuPrincipal() {
         int opcion;
         do {
@@ -30,12 +28,13 @@ public class MenuPrincipal {
     public void iniciarSesion() {
         sc.nextLine();
         System.out.print("Usuario: ");
-        String username =
-                sc.nextLine();
+        String username = sc.nextLine();
         System.out.print("Contraseña: ");
+        String password = sc.nextLine();
+        // Crear Progreso
+        Progreso progreso = new Progreso();
         // ESTUDIANTE
-        Estudiante estudiante =
-                new Estudiante("roberth", "1234", "Roberth", Progreso);
+        Estudiante estudiante = new Estudiante("paco", "1234", "Paco", progreso);
         // VALIDAR LOGIN
         boolean acceso = estudiante.iniciarSesion(username, password);
         if (acceso) {
