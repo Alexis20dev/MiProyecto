@@ -1,4 +1,4 @@
-package Dominio;
+package ec.edu.uce.miproyecto.dominio;
 
 public class estadistica {
     private int idEstadistica;
