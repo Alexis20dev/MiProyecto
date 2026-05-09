@@ -5,7 +5,7 @@ public class Main {
     public static void main(String[] args) {
 
         MenuPrincipal menu = new MenuPrincipal();
-        menu.mostrarMenu();
+        menu.mostrarMenuPrincipal();
         // TEMA
         Tema tema = new Tema("Integrales", "Cálculo integral");
         // CONCEPTO
@@ -21,7 +21,7 @@ public class Main {
         // ESTUDIANTE
         Estudiante estudiante = new Estudiante("roberth", "1234", "Roberth", progreso);
         // LOGIN
-        boolean acceso = estudiante.iniciarSesion("roberth", "1234");
+        boolean acceso = estudiante.iniciarSesion("uce", "1234");
         System.out.println(acceso);
         // RESOLVER
         boolean correcto = estudiante.resolverEjercicio(ejercicio, 1);
