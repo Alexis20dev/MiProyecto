@@ -1,6 +1,6 @@
 package ec.edu.uce.miproyecto.dominio;
 
-public class logro {
+public class Logro {
     private int idLogro;
     private String nombre;
     private String descripcion;
