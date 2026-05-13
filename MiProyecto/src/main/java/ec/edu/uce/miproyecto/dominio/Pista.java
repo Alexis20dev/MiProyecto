@@ -1,6 +1,6 @@
 package ec.edu.uce.miproyecto.dominio;
 
-public class Pistas {
+public class Pista {
     private int idpista;
     private String descripcion;
     private int orden;
