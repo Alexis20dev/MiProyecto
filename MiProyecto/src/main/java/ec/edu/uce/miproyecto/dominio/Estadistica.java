@@ -1,6 +1,6 @@
 package ec.edu.uce.miproyecto.dominio;
 
-public class estadistica {
+public class Estadistica {
     private int idEstadistica;
     private int aciertos;
     private int fallos;
