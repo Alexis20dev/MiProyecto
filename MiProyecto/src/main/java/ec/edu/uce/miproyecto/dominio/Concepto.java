@@ -1,5 +1,5 @@
 package ec.edu.uce.miproyecto.dominio;
-  public class concepto {
+  public class Concepto {
     private int idConcepto;
     private String nombre;
     private String descripcion;
