@@ -1,6 +1,6 @@
 package ec.edu.uce.miproyecto.dominio;
 
-public class ejercicio {
+public class Ejercicio {
 
     private int idEjercicio;
     private String enuncido;
