@@ -2,7 +2,7 @@ package ec.edu.uce.miproyecto.dominio;
 
 import java.util.Date;
 
-public class progreso {
+public class Progreso {
     private int idProgreso;
     private String estado;
     private Date fecha;
