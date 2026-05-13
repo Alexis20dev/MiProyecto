@@ -1,4 +1,17 @@
 package ec.edu.uce.miproyecto.dominio;
+  public class concepto {
+    private int idConcepto;
+    private String nombre;
+    private String descripcion;
+
+    public int getIdConcepto() {
+        return idConcepto;
+    }
+
+    public void setIdConcepto(int idConcepto) {
+        this.idConcepto = idConcepto;
+    }
+
     public String getNombre() {
         return nombre;
     }
@@ -7,10 +20,18 @@ package ec.edu.uce.miproyecto.dominio;
         this.nombre = nombre;
     }
 
-    public Concepto() {
+    public String getDescripcion() {
+        return descripcion;
     }
 
-    public Concepto(int idConcepto, String nombre, String descripcion) {
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
+    }
+
+    public concepto() {
+    }
+
+    public concepto(int idConcepto, String nombre, String descripcion) {
         this.idConcepto = idConcepto;
         this.nombre = nombre;
         this.descripcion = descripcion;
@@ -18,7 +39,7 @@ package ec.edu.uce.miproyecto.dominio;
 
     @Override
     public String toString() {
-        return "Concepto{" +
+        return "concepto{" +
                 "idConcepto=" + idConcepto +
                 ", nombre='" + nombre + '\'' +
                 ", descripcion='" + descripcion + '\'' +
