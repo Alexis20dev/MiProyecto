@@ -7,7 +7,6 @@ public class estadistica {
     private double porcentaje;
     private String nivel;
 
-
     public int getIdEstadistica() {
         return idEstadistica;
     }
@@ -47,7 +46,6 @@ public class estadistica {
     public void setNivel(String nivel) {
         this.nivel = nivel;
     }
-
 
     public estadistica() {
     }
