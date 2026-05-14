@@ -5,6 +5,14 @@ public class Pista {
     private String descripcion;
     private int orden;
 
+    // --- ESTE ES EL MÉTODO QUE FALTA Y SOLUCIONA EL ERROR ---
+    public void mostrarPista() {
+        System.out.println("\n[ AYUDA DISPONIBLE ]");
+        System.out.println("Orden de la pista: " + orden);
+        System.out.println("Sugerencia: " + descripcion);
+        System.out.println("---------------------");
+    }
+
     public int getIdpista() {
         return idpista;
     }
@@ -29,10 +37,10 @@ public class Pista {
         this.orden = orden;
     }
 
-    public Pistas() {
+    public Pista() {
     }
 
-    public Pistas(int idpista, String descripcion, int orden) {
+    public Pista(int idpista, String descripcion, int orden) {
         this.idpista = idpista;
         this.descripcion = descripcion;
         this.orden = orden;
@@ -40,7 +48,7 @@ public class Pista {
 
     @Override
     public String toString() {
-        return "Pistas{" +
+        return "Pista{" +
                 "idpista=" + idpista +
                 ", descripcion='" + descripcion + '\'' +
                 ", orden=" + orden +

@@ -2,10 +2,24 @@ package ec.edu.uce.miproyecto.dominio;
 import java.util.Arrays;
 
 public class Tema {
+
     private int idTema;
-    private String tema;
+    private String nombre; // Antes se llamaba 'tema', ahora coincide con getNombre()
     private String descripcion;
+
     private Concepto[] conceptos;
+    private Ejercicio[] ejercicios;
+
+    public Tema() {
+    }
+
+    public Tema(int idTema, String nombre, String descripcion, Concepto[] conceptos, Ejercicio[] ejercicios) {
+        this.idTema = idTema;
+        this.nombre = nombre;
+        this.descripcion = descripcion;
+        this.conceptos = conceptos;
+        this.ejercicios = ejercicios;
+    }
 
     public int getIdTema() {
         return idTema;
@@ -15,12 +29,12 @@ public class Tema {
         this.idTema = idTema;
     }
 
-    public String getTema() {
-        return tema;
+    public String getNombre() {
+        return nombre;
     }
 
-    public void setTema(String tema) {
-        this.tema = tema;
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
     }
 
     public String getDescripcion() {
@@ -39,23 +53,22 @@ public class Tema {
         this.conceptos = conceptos;
     }
 
-    public Tema() {
+    public Ejercicio[] getEjercicios() {
+        return ejercicios;
     }
 
-    public Tema(int idTema, String tema, String descripcion, Concepto[] conceptos) {
-        this.idTema = idTema;
-        this.tema = tema;
-        this.descripcion = descripcion;
-        this.conceptos = conceptos;
+    public void setEjercicios(Ejercicio[] ejercicios) {
+        this.ejercicios = ejercicios;
     }
 
     @Override
     public String toString() {
         return "Tema{" +
                 "idTema=" + idTema +
-                ", tema='" + tema + '\'' +
+                ", nombre='" + nombre + '\'' +
                 ", descripcion='" + descripcion + '\'' +
                 ", conceptos=" + Arrays.toString(conceptos) +
+                ", ejercicios=" + Arrays.toString(ejercicios) +
                 '}';
     }
 }

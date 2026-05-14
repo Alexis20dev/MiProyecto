@@ -4,54 +4,39 @@ public class Usuario {
 
     private int idUsuario;
     private String nombre;
-    private String email;
-    private String contrasena;
+    private String email; // Corregido: decía 'prte'
+    private String contrasena; // Corregido: decía 'privaivate'
     private Date fechaRegistro;
-
-    @Override
-    public String toString() {
-        return "Usuario{" +
-                "idUsuario=" + idUsuario +
-                ", nombre='" + nombre + '\'' +
-                ", email='" + email + '\'' +
-                ", contrasena='" + contrasena + '\'' +
-                ", fechaRegistro=" + fechaRegistro +
-                ", inicioSesion=" + inicioSesion +
-                '}';
-    }
-
     private InicioSesion inicioSesion;
 
-    public InicioSesion getInicioSesion() {
-        return inicioSesion;
+    // 1. CONSTRUCTOR VACÍO
+    public Usuario() {
     }
 
-    public void setInicioSesion(InicioSesion inicioSesion) {
-       this.inicioSesion = inicioSesion;
-    }
-
-    public Date getFechaRegistro() {
-        return fechaRegistro;
-    }
-
-    public void setFechaRegistro(Date fechaRegistro) {
-        this.fechaRegistro = fechaRegistro;
-    }
-
-    public String getContrasena() {
-        return contrasena;
-    }
-
-    public void setContrasena(String contrasena) {
-        this.contrasena = contrasena;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
+    // 2. CONSTRUCTOR COMPLETO (Asegúrate que el orden coincida con Estudiante y Docente)
+    public Usuario(int idUsuario, String nombre, String email, String contrasena, Date fechaRegistro, InicioSesion inicioSesion) {
+        this.idUsuario = idUsuario;
+        this.nombre = nombre;
         this.email = email;
+        this.contrasena = contrasena;
+        this.fechaRegistro = fechaRegistro;
+        this.inicioSesion = inicioSesion;
+    }
+
+    // 3. EL MÉTODO QUE FALTA (Esto quita el error de MenuPrincipal.java)
+    public boolean iniciarSesion(String username, String password) {
+        // Valida si el nombre o el email coinciden con el 'username' ingresado
+        return (this.nombre.equalsIgnoreCase(username) || this.email.equalsIgnoreCase(username))
+                && this.contrasena.equals(password);
+    }
+
+    // 4. GETTERS Y SETTERS
+    public int getIdUsuario() {
+        return idUsuario;
+    }
+
+    public void setIdUsuario(int idUsuario) {
+        this.idUsuario = idUsuario;
     }
 
     public String getNombre() {
@@ -62,21 +47,45 @@ public class Usuario {
         this.nombre = nombre;
     }
 
-    public int getIdUsuario() {
-        return idUsuario;
+    public String getEmail() {
+        return email;
     }
 
-    public void setIdUsuario(int idUsuario) {
-        this.idUsuario = idUsuario;
-    }
-    public Usuario() {
-    }
-    public Usuario(String email, String contrasena, Date fechaRegistro, InicioSesion inicioSesion, String nombre, int idUsuario){
+    public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getContrasena() {
+        return contrasena;
+    }
+
+    public void setContrasena(String contrasena) {
         this.contrasena = contrasena;
+    }
+
+    public Date getFechaRegistro() {
+        return fechaRegistro;
+    }
+
+    public void setFechaRegistro(Date fechaRegistro) {
         this.fechaRegistro = fechaRegistro;
-       this.inicioSesion = inicioSesion;
-        this.nombre = nombre;
-        this.idUsuario = idUsuario;
+    }
+
+    public InicioSesion getInicioSesion() {
+        return inicioSesion;
+    }
+
+    public void setInicioSesion(InicioSesion inicioSesion) {
+        this.inicioSesion = inicioSesion;
+    }
+
+    @Override
+    public String toString() {
+        return "Usuario{" +
+                "idUsuario=" + idUsuario +
+                ", nombre='" + nombre + '\'' +
+                ", email='" + email + '\'' +
+                ", fechaRegistro=" + fechaRegistro +
+                '}';
     }
 }

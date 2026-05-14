@@ -9,6 +9,15 @@ public class Progreso {
     private int puntaje;
     private int tiempo;
 
+    public void actualizarProgreso(boolean esCorrecto) {
+        this.fecha = new Date(); // Actualiza la fecha al momento del intento
+        if (esCorrecto) {
+            this.puntaje += 10; // Suma puntos por acierto
+            this.estado = "Aprobado";
+        } else {
+            this.estado = "Reprobado";
+        }
+    }
 
     public int getIdProgreso() {
         return idProgreso;
@@ -50,10 +59,10 @@ public class Progreso {
         this.tiempo = tiempo;
     }
 
-    public progreso() {
+    public Progreso() {
     }
 
-    public progreso(int idProgreso, String estado, Date fecha, int puntaje, int tiempo) {
+    public Progreso(int idProgreso, String estado, Date fecha, int puntaje, int tiempo) {
         this.idProgreso = idProgreso;
         this.estado = estado;
         this.fecha = fecha;
@@ -63,7 +72,7 @@ public class Progreso {
 
     @Override
     public String toString() {
-        return "progreso{" +
+        return "Progreso{" +
                 "idProgreso=" + idProgreso +
                 ", estado='" + estado + '\'' +
                 ", fecha=" + fecha +

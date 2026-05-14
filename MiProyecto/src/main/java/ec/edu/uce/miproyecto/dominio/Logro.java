@@ -39,10 +39,10 @@ public class Logro {
         this.condicion = condicion;
     }
 
-    public logro() {
+    public Logro() {
     }
 
-    public logro(int idLogro, String nombre, String descripcion, String condicion) {
+    public Logro(int idLogro, String nombre, String descripcion, String condicion) {
         this.idLogro = idLogro;
         this.nombre = nombre;
         this.descripcion = descripcion;
@@ -51,7 +51,7 @@ public class Logro {
 
     @Override
     public String toString() {
-        return "logro{" +
+        return "Logro{" +
                 "idLogro=" + idLogro +
                 ", nombre='" + nombre + '\'' +
                 ", descripcion='" + descripcion + '\'' +

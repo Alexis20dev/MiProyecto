@@ -1,7 +1,6 @@
 package ec.edu.uce.miproyecto.interfaz;
 
 import ec.edu.uce.miproyecto.dominio.*;
-
 import java.util.Scanner;
 
 public class MenuUsuario {
@@ -12,117 +11,73 @@ public class MenuUsuario {
     public MenuUsuario(Estudiante estudiante, Ejercicio ejercicio) {
         this.estudiante = estudiante;
         this.ejercicio = ejercicio;
-
     }
 
     public void mostrarMenuUsuario() {
-
         int opcion;
-
         do {
-
             System.out.println("\n===== MENÚ USUARIO =====");
-
-            System.out.println("1) Ver perfil");
-
-            System.out.println(
-                    "2) Ver temas"
-            );
-
-            System.out.println(
-                    "3) Resolver ejercicios"
-            );
-
-            System.out.println(
-                    "4) Ver conceptos"
-            );
-
-            System.out.println(
-                    "5) Solicitar pistas"
-            );
-
-            System.out.println(
-                    "6) Ver progreso"
-            );
-
-            System.out.println(
-                    "7) Cerrar sesión"
-            );
-
+            System.out.println("1) Ver perfil\n2) Ver temas\n3) Resolver ejercicios\n4) Ver conceptos\n5) Solicitar pistas\n6) Ver progreso\n7) Cerrar sesión");
             System.out.print("Seleccione una opción: ");
-
             opcion = sc.nextInt();
 
             switch (opcion) {
-
                 case 1:
-                    System.out.println();
-                    System.out.println("  ------------Perfil-----------  ");
-                    System.out.println("\nNombre: " + estudiante.getNombre());
-                    System.out.println("Usuario: " + estudiante.getUsername());
-                    break;
+                    System.out.println("\n  ------------Perfil-----------  ");
+                    System.out.println("Nombre: " + estudiante.getNombre());
+                    System.out.println("Usuario: " + estudiante.getEmail());                    break;
 
                 case 2:
-                    System.out.println();
-                    System.out.println("--------- Tema -----------");
-                    System.out.println("\nTema Actual: " + ejercicio.getTema().getNombre());
+                    System.out.println("\n--------- Tema -----------");
+                    // Asegúrate de que Ejercicio tenga el método getTema()
+                    System.out.println("Tema Actual: " + ejercicio.getTema().getNombre());
                     break;
 
                 case 3:
-                    System.out.println();
-                    System.out.println("---------Ejercicio-------------");
-                    System.out.println("\n" + ejercicio.mostrarEjercicio());
+                    System.out.println("\n---------Ejercicio-------------");
+                    ejercicio.mostrarEjercicio(); // Se llama directo porque es void
                     System.out.print("Ingrese Respuesta: ");
 
-                    double respuesta = sc.nextDouble();
+                    String respuesta = sc.next(); // Cambiado de double a String según diagrama
 
-                    boolean correcto =
-                            estudiante.resolverEjercicio(ejercicio, respuesta);
+                    boolean correcto = estudiante.resolverEjercicio(ejercicio, respuesta);
 
-                    estudiante
-                            .verProgreso()
-                            .actualizarProgreso(correcto);
+                    estudiante.verProgreso().actualizarProgreso(correcto);
 
                     if (correcto) {
-                        System.out.println("Correcto");
-
+                        System.out.println("¡Resultado Correcto!");
                     } else {
-                        System.out.println("Incorrecto");
+                        System.out.println("Resultado Incorrecto");
                     }
                     break;
 
                 case 4:
-                    System.out.println();
-                    System.out.println("----------- Concepto --------------");
-                    estudiante.verConcepto(ejercicio.getConcepto());
+                    System.out.println("\n----------- Concepto --------------");
+                    if (ejercicio.getTema().getConceptos().length > 0) {
+                        estudiante.verConcepto(ejercicio.getTema().getConceptos()[0]);
+                    }
                     break;
 
                 case 5:
-                    System.out.println();
-                    System.out.println("----------- Pitas ---------------");
+                    System.out.println("\n----------- Pistas ---------------");
                     Pista pista = estudiante.solicitarPista(ejercicio);
-
                     if (pista != null) {
-                        System.out.println(pista.mostrarPista());
+                        pista.mostrarPista();
                     }
                     break;
 
                 case 6:
-                    System.out.println();
-                    System.out.println("------------ Progreso ------------- ");
-                    System.out.println(estudiante.verProgreso().mostrarEstadisticas());
+                    System.out.println("\n------------ Progreso ------------- ");
+                    System.out.println(estudiante.verProgreso().toString());
                     break;
 
                 case 7:
-                    System.out.println();
-                    System.out.println("Sesión Finalizada");
+                    System.out.println("\nSesión Finalizada");
                     break;
 
                 default:
-                    System.out.println();
-                    System.out.println("Opción Inválida");
+                    System.out.println("\nOpción Inválida");
             }
-
         } while (opcion != 7);
     }
 }

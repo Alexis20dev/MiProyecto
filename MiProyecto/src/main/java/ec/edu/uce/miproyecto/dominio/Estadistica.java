@@ -47,10 +47,10 @@ public class Estadistica {
         this.nivel = nivel;
     }
 
-    public estadistica() {
+    public Estadistica() {
     }
 
-    public estadistica(int idEstadistica, int aciertos, int fallos, double porcentaje, String nivel) {
+    public Estadistica(int idEstadistica, int aciertos, int fallos, double porcentaje, String nivel) {
         this.idEstadistica = idEstadistica;
         this.aciertos = aciertos;
         this.fallos = fallos;
@@ -60,7 +60,7 @@ public class Estadistica {
 
     @Override
     public String toString() {
-        return "estadistica{" +
+        return "Estadistica{" +
                 "idEstadistica=" + idEstadistica +
                 ", aciertos=" + aciertos +
                 ", fallos=" + fallos +
