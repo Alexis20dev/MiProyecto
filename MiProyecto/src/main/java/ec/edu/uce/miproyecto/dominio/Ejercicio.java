@@ -5,12 +5,19 @@ public class Ejercicio {
     private String enunciado;
     private String respuesta;
     private String dificultad;
-    private Tema tema;
-    private Pista pista; // Agregado según tu diagrama de clases
+    private String tema;
+    private String pista;
 
-    public Ejercicio() {}
+    public Ejercicio() {
+        this.idEjercicio = 0;
+        this.enunciado = "sin enunciado";
+        this.respuesta = "sin respuesta";
+        this.dificultad = "Baja/Media/Alta";
+        this.tema = "sin tema";
+        this.pista = "sin pista";
+    }
 
-    public Ejercicio(int idEjercicio, String enunciado, String respuesta, String dificultad, Tema tema, Pista pista) {
+    public Ejercicio(int idEjercicio, String enunciado, String respuesta, String dificultad, String tema, String pista) {
         this.idEjercicio = idEjercicio;
         this.enunciado = enunciado;
         this.respuesta = respuesta;
@@ -43,7 +50,7 @@ public class Ejercicio {
         return "Ejercicio{" +
                 "id=" + idEjercicio +
                 ", enunciado='" + enunciado + '\'' +
-                ", tema=" + (tema != null ? tema.getNombre() : "N/A") +
+                ", tema=" + (tema != null ? getTema() : "N/A") +
                 '}';
     }
 }

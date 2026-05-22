@@ -15,7 +15,7 @@ class EjercicioTest {
     @Test
     void getTema() {
         Tema tema = new Tema(1, "Integrales", "Cálculo Integral", null, null);
-        Ejercicio ejercicio = new Ejercicio(1, "Integral de 2x", "x^2", "Fácil", tema, null);
+        Ejercicio ejercicio = new Ejercicio(1, "Integral de 2x", "x^2", "Fácil", "Integral directa", null);
         assertEquals(tema, ejercicio.getTema());
     }
 
@@ -30,7 +30,7 @@ class EjercicioTest {
     @Test
     void getPista() {
         Pista pista = new Pista(1, "Usa cambio de variable", 1);
-        Ejercicio ejercicio = new Ejercicio(1, "Integral de 2x", "x^2", "Fácil", null, pista);
+        Ejercicio ejercicio = new Ejercicio(1, "Integral de 2x", "x^2", "Fácil", null, "x^n= x^(n+1)/n+1");
         assertEquals(pista, ejercicio.getPista());
     }
 

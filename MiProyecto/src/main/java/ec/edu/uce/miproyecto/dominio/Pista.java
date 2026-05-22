@@ -37,7 +37,7 @@ public class Pista {
         this.orden = orden;
     }
 
-    public Pista() {
+    public Pista(int i, String usaSustitución) {
     }
 
     public Pista(int idpista, String descripcion, int orden) {
