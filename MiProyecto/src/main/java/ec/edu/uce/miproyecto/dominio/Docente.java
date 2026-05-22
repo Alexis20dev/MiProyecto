@@ -4,7 +4,7 @@ import java.util.Date;
 
 public class Docente extends Usuario {
 
-    // El constructor debe pedir los mismos datos que Usuario para poder pasárselos
+
     public Docente(int idUsuario, String nombre, String email, String contrasena,
                    Date fechaRegistro) {
         // El orden debe ser: ID, Nombre, Email, Contraseña, Fecha, Sesión

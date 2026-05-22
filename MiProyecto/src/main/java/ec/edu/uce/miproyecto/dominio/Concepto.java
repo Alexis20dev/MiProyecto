@@ -3,7 +3,6 @@ public class Concepto {
     private int idConcepto;
     private String nombre;
     private String descripcion;
-
     public void mostrarExplicacion() {
         System.out.println("\n--- DETALLE DEL CONCEPTO ---");
         System.out.println("Tema: " + nombre);
