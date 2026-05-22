@@ -25,7 +25,9 @@ public class MenuUsuario {
                 case 1:
                     System.out.println("\n  ------------Perfil-----------  ");
                     System.out.println("Nombre: " + estudiante.getNombre());
-                    System.out.println("Usuario: " + estudiante.getEmail());                    break;
+                    System.out.println("Usuario: " + estudiante.getEmail());
+                    System.out.println("idUsuaio: "+ estudiante.getIdUsuario());
+                    break;
 
                 case 2:
                     System.out.println("\n--------- Tema -----------");

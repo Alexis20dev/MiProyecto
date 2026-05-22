@@ -8,9 +8,9 @@ public class Estudiante extends Usuario {
 
     // CONSTRUCTOR CORREGIDO (Arregla el error de la imagen image_cc5f03.png)
     public Estudiante(int idUsuario, String nombre, String email, String contrasena,
-                      Date fechaRegistro, InicioSesion inicioSesion, Progreso progreso) {
+                      Date fechaRegistro, Progreso progreso) {
         // Pasamos los datos al padre (Usuario) en el orden correcto
-        super(idUsuario, nombre, email, contrasena, fechaRegistro, inicioSesion);
+        super(idUsuario, nombre, email, contrasena, fechaRegistro);
         this.progreso = progreso;
     }
 

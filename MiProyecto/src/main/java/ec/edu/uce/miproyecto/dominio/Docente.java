@@ -6,9 +6,9 @@ public class Docente extends Usuario {
 
     // El constructor debe pedir los mismos datos que Usuario para poder pasárselos
     public Docente(int idUsuario, String nombre, String email, String contrasena,
-                   Date fechaRegistro, InicioSesion inicioSesion) {
+                   Date fechaRegistro) {
         // El orden debe ser: ID, Nombre, Email, Contraseña, Fecha, Sesión
-        super(idUsuario, nombre, email, contrasena, fechaRegistro, inicioSesion);
+        super(idUsuario, nombre, email, contrasena, fechaRegistro);
     }
 
     public void crearEjercicio(Ejercicio ejercicio) {

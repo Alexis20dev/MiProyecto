@@ -63,13 +63,13 @@ public class Tema {
 
     @Override
     public String toString() {
-        return "Tema{" +
-                "idTema=" + idTema +
-                ", nombre='" + nombre + '\'' +
-                ", descripcion='" + descripcion + '\'' +
-                ", conceptos=" + Arrays.toString(conceptos) +
-                ", ejercicios=" + Arrays.toString(ejercicios) +
-                '}';
+        return "===================================\n" +
+                "  TEMA: " + nombre + " (ID: " + idTema + ")\n" +
+                "  Descripción: " + descripcion + "\n" +
+                "-----------------------------------\n" +
+                "  Cantidad de Conceptos: " + (conceptos != null ? conceptos.length : 0) + "\n" +
+                "  Cantidad de Ejercicios: " + (ejercicios != null ? ejercicios.length : 0) + "\n" +
+                "===================================";
     }
 }
 
