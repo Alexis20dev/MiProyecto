@@ -1,21 +1,39 @@
 package ec.edu.uce.miproyecto.interfaz;
+
 import ec.edu.uce.miproyecto.dominio.*;
 import ec.edu.uce.miproyecto.util.Validaciones;
+import ec.edu.uce.miproyecto.util.Consola; // 🚀 Importamos tu nueva clase de textos
 import java.util.Scanner;
 import java.util.Date;
 
 public class MenuPrincipal {
     private final Scanner sc = new Scanner(System.in);
+    private final Gestion controlador = new Gestion();
+
+    public MenuPrincipal() {
+        Progreso progresoInicial = new Progreso();
+        Estudiante ePrueba = new Estudiante(1, "Jeremy", "jeremy@uce.edu.ec", "1234", new Date(), "Principiante", progresoInicial);
+        Docente dPrueba = new Docente(2, "Ing. Lara", "lara@uce.edu.ec", "abcd", new Date(), "Cálculo");
+
+        controlador.registrarUsuario(ePrueba);
+        controlador.registrarUsuario(dPrueba);
+    }
 
     public void mostrarMenuPrincipal() {
-        int opcion;
+        String opcionInput; // Cambiamos a String para poder recibir CUALQUIER entrada sin que se caiga
+        int opcion = 0;
+
         do {
-            System.out.println("\n========== FLOWTASKS ==========");
-            System.out.println("1. Registrar Usuario");
-            System.out.println("2. Iniciar Sesión");
-            System.out.println("3. Salir");
-            System.out.print("Seleccione una opcion: ");
-            opcion = sc.nextInt();
+            Consola.menuPrincipal();
+            opcionInput = sc.next();
+
+            if (!Validaciones.validarNumero(opcionInput)) {
+                Consola.error("Entrada no válida. Por favor, ingrese solo los números 1, 2 o 3.");
+                continue;
+            }
+
+            opcion = Integer.parseInt(opcionInput);
+
             switch (opcion) {
                 case 1:
                     registrarUsuario();
@@ -27,20 +45,19 @@ public class MenuPrincipal {
                     System.out.println("Saliendo del sistema...");
                     break;
                 default:
-                    System.out.println("Opción inválida");
+                    Consola.error("Opción fuera de rango. Seleccione 1, 2 o 3.");
             }
         } while (opcion != 3);
     }
-
     public void registrarUsuario() {
-        System.out.println("\n=== REGISTRO USUARIO ===");
+        Consola.tituloRegistro();
 
         String idT;
         while (true) {
             System.out.print("ID Usuario: ");
             idT = sc.next();
             if (Validaciones.validarNumero(idT)) break;
-            System.out.println("❌ Error: Use solo números.");
+            Consola.error("Use solo números.");
         }
         int id = Integer.parseInt(idT);
         sc.nextLine();
@@ -50,7 +67,7 @@ public class MenuPrincipal {
             System.out.print("Nombre: ");
             nom = sc.nextLine();
             if (Validaciones.validarNombre(nom)) break;
-            System.out.println("❌ Error: Use solo letras.");
+            Consola.error("Use solo letras.");
         }
 
         String mail;
@@ -58,7 +75,7 @@ public class MenuPrincipal {
             System.out.print("Email: ");
             mail = sc.nextLine();
             if (Validaciones.validarEmail(mail)) break;
-            System.out.println("❌ Error: Correo no válido.");
+            Consola.error("Correo no válido.");
         }
 
         String pass;
@@ -66,78 +83,100 @@ public class MenuPrincipal {
             System.out.print("Contraseña: ");
             pass = sc.nextLine();
             if (Validaciones.validarContrasena(pass)) break;
-            System.out.println("❌ Error: Mínimo 4 caracteres.");
+            Consola.error("Mínimo 4 caracteres.");
         }
 
+        Consola.pedirTipoUsuario();
+        int tipo = sc.nextInt();
+
         Date fecha = new Date();
-        Usuario nuevo = new Usuario(id, nom, mail, pass, fecha);
-        System.out.println("Usuario registrado correctamente.");
+        if (tipo == 1) {
+            Progreso nuevoProgreso = new Progreso();
+            Estudiante nuevoEstudiante = new Estudiante(id, nom, mail, pass, fecha, "Principiante", nuevoProgreso);
+            controlador.registrarUsuario(nuevoEstudiante);
+        } else {
+            Docente nuevoDocente = new Docente(id, nom, mail, pass, fecha, "Desarrollo de Software");
+            controlador.registrarUsuario(nuevoDocente);
+        }
+
+        Consola.info("Usuario registrado correctamente en el sistema.");
     }
 
     public void iniciarSesion() {
-        sc.nextLine();
-        System.out.print("Usuario: ");
-        String username = sc.nextLine();
+        sc.nextLine(); // Limpiar buffer
+        System.out.print("Usuario o Correo Electrónico: ");
+        String credencialInput = sc.nextLine();
         System.out.print("Contraseña: ");
-        String password = sc.nextLine();
+        String passwordInput = sc.nextLine();
 
-        Progreso progreso = new Progreso();
-        Estudiante estudiantePrueba = new Estudiante(1, "Paco", "paco@uce.edu.ec", "1234", new Date(), progreso);
-        Docente docentePrueba = new Docente(2, "Ing. Lara", "lara@uce.edu.ec", "abcd", new Date());
+        // 1. Buscamos primero si el usuario existe en el sistema
+        Usuario usuarioLogueado = controlador.buscarUsuarioPorCorreo(credencialInput);
 
-        if (estudiantePrueba.iniciarSesion(username, password)) {
-            System.out.println("\n🔑 ¡Inicio de sesión exitoso como ESTUDIANTE!");
+        if (usuarioLogueado == null) {
+            // ❌ CASO A: El correo no está registrado
+            Consola.error("El correo electrónico '" + credencialInput + "' no está registrado en el sistema.");
+            return; // Cortamos la ejecución aquí para que intente de nuevo
+        }
+
+        // 2. Si el usuario existe, validamos si la contraseña coincide
+        if (!usuarioLogueado.getContrasena().equals(passwordInput)) {
+            // ❌ CASO B: El usuario existe, pero la contraseña está mal
+            Consola.error("Contraseña incorrecta para el usuario: " + usuarioLogueado.getNombre() + ". Intente de nuevo.");
+            return; // Cortamos la ejecución
+        }
+
+        // 3. Si pasó los dos filtros anteriores, las credenciales son correctas
+        if (usuarioLogueado instanceof Estudiante) {
+            Estudiante estudiante = (Estudiante) usuarioLogueado;
+            Consola.exitoLogin("ESTUDIANTE");
 
             Concepto concepto = new Concepto(1, "Sustitución", "Cambio de variable");
             Pista pista = new Pista(1, "Usa la regla de la potencia", 1);
-            Ejercicio ejercicio = new Ejercicio(1, "Integral de 2x", "x^2", "Fácil", null, pista);
-            Tema tema = new Tema(1, "Integrales", "Cálculo integral", new Concepto[]{concepto}, new Ejercicio[]{ejercicio});
-            ejercicio.setTema(tema);
+            Ejercicio ejercicio = new Ejercicio(1, "Integral de 2x", "x^2", "Fácil", new Pista[]{pista});
 
-            MenuUsuario menuUsuario = new MenuUsuario(estudiantePrueba, ejercicio);
+            MenuUsuario menuUsuario = new MenuUsuario(estudiante, ejercicio);
             menuUsuario.mostrarMenuUsuario();
 
-        } else if (docentePrueba.iniciarSesion(username, password)) {
-            System.out.println("\n🔑 ¡Inicio de sesión exitoso como DOCENTE!");
+        } else if (usuarioLogueado instanceof Docente) {
+            Docente docente = (Docente) usuarioLogueado;
+            Consola.exitoLogin("DOCENTE");
 
-            // Datos iniciales para que el docente tenga algo que revisar en sus arreglos
             Concepto c1 = new Concepto(1, "Sustitución", "Cambio de variable");
-            Ejercicio e1 = new Ejercicio(1, "Integral de 2x", "x^2", "Fácil", null, null);
+            Ejercicio e1 = new Ejercicio(1, "Integral de 2x", "x^2", "Fácil", new Pista[0]);
             Tema temaSimulado = new Tema(1, "Integrales", "Cálculo integral", new Concepto[]{c1}, new Ejercicio[]{e1});
 
             int opDocente;
             do {
-                System.out.println("\n===== BIENVENIDO DOCENTE: " + docentePrueba.getNombre() + " =====");
-                System.out.println("1) Revisar Temas y Arreglos de Conceptos");
-                System.out.println("2) Simular Crear Ejercicio");
-                System.out.println("3) Cerrar Sesión");
-                System.out.print("Seleccione una opción: ");
+                Consola.menuDocente(docente.getNombre());
                 opDocente = sc.nextInt();
 
                 switch (opDocente) {
                     case 1:
                         System.out.println("\n--- REVISANDO ESTRUCTURA DE DATOS (UML) ---");
-                        // Usamos el toString que analiza los arreglos de conceptos
                         System.out.println(temaSimulado.toString());
-                        System.out.println("Concepto asociado en el arreglo: " + temaSimulado.getConceptos()[0].getNombre());
+                        if (temaSimulado.getConceptos() != null && temaSimulado.getConceptos().length > 0) {
+                            System.out.println("Concepto asociado en el arreglo: " + temaSimulado.getConceptos()[0].getNombre());
+                        }
                         break;
                     case 2:
                         System.out.print("\nIngrese el enunciado del nuevo ejercicio: ");
-                        sc.nextLine(); // Limpiar buffer
+                        sc.nextLine();
                         String nuevoEnunciado = sc.nextLine();
-                        Ejercicio nuevoEj = new Ejercicio(2, nuevoEnunciado, "0", "Medio", null, null);
-                        docentePrueba.crearEjercicio(nuevoEj); // Llama al método de la clase Docente
+
+                        int siguienteId = controlador.getListaItemE().size() + 1;
+                        Ejercicio nuevoEj = new Ejercicio(siguienteId, nuevoEnunciado, "0", "Medio", new Pista[0]);
+
+                        controlador.agregarEjercicio(nuevoEj);
+                        Consola.info("Ejercicio registrado con éxito en el controlador central como ItemEjercicio.");
                         break;
                     case 3:
+                        usuarioLogueado.cerrarSesion();
                         System.out.println("Cerrando sesión de docente...");
                         break;
                     default:
-                        System.out.println("Opción inválida");
+                        Consola.error("Opción inválida");
                 }
             } while (opDocente != 3);
-
-        } else {
-            System.out.println("❌ Credenciales incorrectas. Intente de nuevo.");
         }
     }
 }

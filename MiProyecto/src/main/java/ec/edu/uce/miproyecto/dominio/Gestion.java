@@ -1,47 +1,71 @@
 package ec.edu.uce.miproyecto.dominio;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class Gestion {
-    private List<Usuario> listaUsuarios;
-    private List<Tema> listaTemas;
-    private List<Ejercicio> listaEjercicios;
+
+    private ArrayList<Usuario> listaUsuarios;
+    private ArrayList<Tema> listaTemas;
+    private ArrayList<ItemEjercicio> listaItemE;
 
     public Gestion() {
         this.listaUsuarios = new ArrayList<>();
         this.listaTemas = new ArrayList<>();
-        this.listaEjercicios = new ArrayList<>();
+        this.listaItemE = new ArrayList<>();
     }
 
-    public void registrarUsuario(Usuario nuevo) {
-        listaUsuarios.add(nuevo);
+    public void registrarUsuario(Usuario usuario) {
+        if (usuario != null) {
+            this.listaUsuarios.add(usuario);
+        }
     }
 
-    public Usuario buscarUsuarioPorCorreo(String correo) {
+    public Usuario buscarUsuarioPorCorreo(String credencial) {
         for (Usuario u : listaUsuarios) {
-            if (u.getEmail().equalsIgnoreCase(correo)) {
+            if (u.getEmail().equalsIgnoreCase(credencial) || u.getNombre().equalsIgnoreCase(credencial)) {
                 return u;
             }
         }
-        return null; // No existe
+        return null;
     }
 
-
-    public void crearTema(Tema nuevoTema) {
-        listaTemas.add(nuevoTema);
+    public void agregarEjercicio(Ejercicio ejercicio) {
+        if (ejercicio != null) {
+            ItemEjercicio nuevoItem = new ItemEjercicio(ejercicio, "Nuevo");
+            this.listaItemE.add(nuevoItem);
+        }
     }
 
-    public List<Tema> listarTemas() {
+    public ArrayList<Usuario> getListaUsuarios() {
+        return listaUsuarios;
+    }
+
+    public void setListaUsuarios(ArrayList<Usuario> listaUsuarios) {
+        this.listaUsuarios = listaUsuarios;
+    }
+
+    public ArrayList<Tema> getListaTemas() {
         return listaTemas;
     }
 
-
-    public void agregarEjercicio(Ejercicio nuevoEj) {
-        listaEjercicios.add(nuevoEj);
+    public void setListaTemas(ArrayList<Tema> listaTemas) {
+        this.listaTemas = listaTemas;
     }
 
-    public List<Ejercicio> listarEjercicios() {
-        return listaEjercicios;
+    public ArrayList<ItemEjercicio> getListaItemE() {
+        return listaItemE;
+    }
+
+    public void setListaItemE(ArrayList<ItemEjercicio> listaItemE) {
+        this.listaItemE = listaItemE;
+    }
+
+    @Override
+    public String toString() {
+        return "Gestion{" +
+                "listaUsuarios=" + listaUsuarios +
+                ", listaTemas=" + listaTemas +
+                ", listaItemE=" + listaItemE +
+                '}';
     }
 }

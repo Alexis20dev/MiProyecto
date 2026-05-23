@@ -1,115 +1,63 @@
 package ec.edu.uce.miproyecto.dominio;
 
 import org.junit.jupiter.api.Test;
-
 import java.util.Date;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 class EstudianteTest {
 
     @Test
-    void solicitarPista() {
-        Pista pista = new Pista(1, "Usa sustitución");
-        Ejercicio ejercicio = new Ejercicio(1, "Integral de x^2","x^3/3","Baja","Integral directa", "Suma 1 al exponente y divide sobre el nuevo exponente");
+    void getNivel() {
+        Date fechaPrueba = new Date();
+        Progreso progresoSimulado = new Progreso();
+        Estudiante estudiante = new Estudiante(1, "Jeremy", "jeremy@uce.edu.ec", "1234", fechaPrueba, "Principiante", progresoSimulado);
 
-        Estudiante estudiante = new Estudiante(
-                1,
-                "Juan",
-                "juan@uce.edu.ec",
-                "1234",
-                new Date(),
-                null
-        );
-
-        assertEquals(pista, estudiante.solicitarPista(ejercicio));
+        assertEquals("Principiante", estudiante.getNivel(), "El nivel obtenido no coincide con el asignado en el constructor.");
     }
 
     @Test
-    void verConcepto() {
-        Concepto concepto = new Concepto(
-                1,
-                "Método de Sustitución",
-                "Cambio de variable"
-        );
+    void setLevel() {
+        Date fechaPrueba = new Date();
+        Progreso progresoSimulado = new Progreso();
+        Estudiante estudiante = new Estudiante(1, "Jeremy", "jeremy@uce.edu.ec", "1234", fechaPrueba, "Principiante", progresoSimulado);
 
-        Estudiante estudiante = new Estudiante(
-                1,
-                "Juan",
-                "juan@uce.edu.ec",
-                "1234",
-                new Date(),
-                null
-        );
+        estudiante.setLevel("Avanzado");
 
-        estudiante.verConcepto(concepto);
-
-        assertNotNull(concepto);
-    }
-
-    @Test
-    void resolverEjercicio() {
-        Ejercicio ejercicio = new Ejercicio(1, "Integral de 4x^3","x^4","Baja","Integrales directas","x^n=x^n/n");
-
-        Estudiante estudiante = new Estudiante(
-                1,
-                "Juan",
-                "juan@uce.edu.ec",
-                "1234",
-                new Date(),
-                null
-        );
-
-        assertTrue(estudiante.resolverEjercicio(ejercicio, "x³/3"));
-    }
-
-    @Test
-    void verProgreso() {
-        Progreso progreso = new Progreso();
-
-        Estudiante estudiante = new Estudiante(
-                1,
-                "Juan",
-                "juan@uce.edu.ec",
-                "1234",
-                new Date(),
-                progreso
-        );
-
-        assertEquals(progreso, estudiante.verProgreso());
+        assertEquals("Avanzado", estudiante.getNivel(), "El nivel no se modificó correctamente con el método setLevel.");
     }
 
     @Test
     void getProgreso() {
-        Progreso progreso = new Progreso();
+        Date fechaPrueba = new Date();
+        Progreso progresoSimulado = new Progreso();
+        Estudiante estudiante = new Estudiante(1, "Jeremy", "jeremy@uce.edu.ec", "1234", fechaPrueba, "Principiante", progresoSimulado);
 
-        Estudiante estudiante = new Estudiante(
-                1,
-                "Juan",
-                "juan@uce.edu.ec",
-                "1234",
-                new Date(),
-                progreso
-        );
-
-        assertEquals(progreso, estudiante.getProgreso());
+        assertNotNull(estudiante.getProgreso(), "El progreso obtenido no debería ser nulo.");
+        assertEquals(progresoSimulado, estudiante.getProgreso(), "El objeto Progreso obtenido no coincide con el instanciado.");
     }
 
     @Test
     void setProgreso() {
-        Estudiante estudiante = new Estudiante(
-                1,
-                "Juan",
-                "juan@uce.edu.ec",
-                "1234",
-                new Date(),
-                null
-        );
+        Date fechaPrueba = new Date();
+        Estudiante estudiante = new Estudiante(1, "Jeremy", "jeremy@uce.edu.ec", "1234", fechaPrueba, "Principiante", null);
 
-        Progreso progreso = new Progreso();
+        Progreso nuevoProgreso = new Progreso();
+        estudiante.setProgreso(nuevoProgreso);
 
-        estudiante.setProgreso(progreso);
+        assertNotNull(estudiante.getProgreso(), "El progreso no se asignó correctamente con el setter.");
+        assertEquals(nuevoProgreso, estudiante.getProgreso(), "El objeto Progreso modificado no coincide.");
+    }
 
-        assertEquals(progreso, estudiante.getProgreso());
+    @Test
+    void testToString() {
+        Date fechaPrueba = new Date();
+        Progreso progresoSimulado = new Progreso();
+        Estudiante estudiante = new Estudiante(1, "Jeremy", "jeremy@uce.edu.ec", "1234", fechaPrueba, "Experto", progresoSimulado);
+
+        String resultadoToString = estudiante.toString();
+
+        assertNotNull(resultadoToString, "El método toString() devolvió null.");
+        assertTrue(resultadoToString.contains("Jeremy"), "El toString() no incluye el nombre del estudiante.");
+        assertTrue(resultadoToString.contains("Experto"), "El toString() no incluye el nivel del estudiante.");
     }
 }

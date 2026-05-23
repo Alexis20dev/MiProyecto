@@ -4,28 +4,38 @@ import java.util.Date;
 
 public class Docente extends Usuario {
 
+    // 1. ATRIBUTOS
+    private String especialidad;
 
-    public Docente(int idUsuario, String nombre, String email, String contrasena,
-                   Date fechaRegistro) {
-        // El orden debe ser: ID, Nombre, Email, Contraseña, Fecha, Sesión
+    // 2. CONSTRUCTOR POR DEFECTO
+    public Docente() {
+        super();
+        this.especialidad = "Sin especialidad";
+    }
+
+    // 3. CONSTRUCTOR CON PARÁMETROS
+    public Docente(int idUsuario, String nombre, String email, String contrasena, Date fechaRegistro, String especialidad) {
         super(idUsuario, nombre, email, contrasena, fechaRegistro);
+        this.especialidad = especialidad;
     }
 
-    public void crearEjercicio(Ejercicio ejercicio) {
-        System.out.println("Ejercicio creado: " + ejercicio.getEnunciado());
+    // (MÉTODOS DE LÓGICA ELIMINADOS POR COMPLETO) ❌
+
+    // 4. MÉTODOS GETTERS Y SETTERS
+    public String getEspecialidad() {
+        return especialidad;
     }
 
-    public boolean editarEjercicio(Ejercicio ejercicio) {
-        System.out.println("Ejercicio editado");
-        return true;
+    public void setEspecialidad(String especialidad) {
+        this.especialidad = especialidad;
     }
 
-    public boolean eliminarEjercicio(Ejercicio ejercicio) {
-        System.out.println("Ejercicio eliminado");
-        return true;
-    }
-
-    public void revisarEjercicio(Ejercicio ejercicio) {
-        System.out.println("Revisando ejercicio: " + ejercicio.getEnunciado());
+    // 5. MÉTODO TOSTRING
+    @Override
+    public String toString() {
+        return "Docente{" +
+                super.toString() +
+                ", especialidad='" + especialidad + '\'' +
+                '}';
     }
 }

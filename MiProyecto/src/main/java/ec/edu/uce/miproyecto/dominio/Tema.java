@@ -1,16 +1,19 @@
 package ec.edu.uce.miproyecto.dominio;
-import java.util.Arrays;
 
 public class Tema {
 
     private int idTema;
-    private String nombre; // Antes se llamaba 'tema', ahora coincide con getNombre()
+    private String nombre;
     private String descripcion;
-
     private Concepto[] conceptos;
     private Ejercicio[] ejercicios;
 
     public Tema() {
+        this.idTema = 0;
+        this.nombre = "Sin nombre";
+        this.descripcion = "Sin descripción";
+        this.conceptos = new Concepto[5];   // Espacio por defecto para 5 conceptos
+        this.ejercicios = new Ejercicio[5]; // Espacio por defecto para 5 ejercicios
     }
 
     public Tema(int idTema, String nombre, String descripcion, Concepto[] conceptos, Ejercicio[] ejercicios) {
@@ -63,13 +66,13 @@ public class Tema {
 
     @Override
     public String toString() {
-        return "===================================\n" +
-                "  TEMA: " + nombre + " (ID: " + idTema + ")\n" +
-                "  Descripción: " + descripcion + "\n" +
-                "-----------------------------------\n" +
-                "  Cantidad de Conceptos: " + (conceptos != null ? conceptos.length : 0) + "\n" +
-                "  Cantidad de Ejercicios: " + (ejercicios != null ? ejercicios.length : 0) + "\n" +
-                "===================================";
+        return "Tema{" +
+                "idTema=" + idTema +
+                ", nombre='" + nombre + '\'' +
+                ", descripcion='" + descripcion + '\'' +
+                ", cantidadConceptos=" + (conceptos != null ? conceptos.length : 0) +
+                ", cantidadEjercicios=" + (ejercicios != null ? ejercicios.length : 0) +
+                '}';
     }
 }
 

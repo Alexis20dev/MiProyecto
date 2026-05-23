@@ -3,51 +3,44 @@ package ec.edu.uce.miproyecto.dominio;
 import java.util.Date;
 
 public class Estudiante extends Usuario {
-
+    private String nivel;
     private Progreso progreso;
 
-    // CONSTRUCTOR CORREGIDO (Arregla el error de la imagen image_cc5f03.png)
-    public Estudiante(int idUsuario, String nombre, String email, String contrasena,
-                      Date fechaRegistro, Progreso progreso) {
-        // Pasamos los datos al padre (Usuario) en el orden correcto
+    public Estudiante() {
+        super();
+        this.nivel = "Principiante";
+        this.progreso = new Progreso();
+    }
+
+    public Estudiante(int idUsuario, String nombre, String email, String contrasena, Date fechaRegistro,
+                      String nivel, Progreso progreso) {
         super(idUsuario, nombre, email, contrasena, fechaRegistro);
+        this.nivel = nivel;
         this.progreso = progreso;
     }
 
-    // MÉTODOS DE LÓGICA DEL ESTUDIANTE
-
-    public Pista solicitarPista(Ejercicio ejercicio) {
-        // Retorna la pista asociada al ejercicio actual
-        return ejercicio.getPista();
+    public String getNivel() {
+        return nivel;
     }
 
-    public void verConcepto(Concepto concepto) {
-        // Imprime la información del concepto (asegúrate que mostrarExplicacion() exista en Concepto)
-        System.out.println("--- Concepto: " + concepto.getNombre() + " ---");
-        System.out.println(concepto.getDescripcion());
+    public void setLevel(String nivel) {
+        this.nivel = nivel;
     }
 
-    public boolean resolverEjercicio(Ejercicio ejercicio, String respuesta) {
-        // Compara la respuesta del usuario con la respuesta correcta sin importar mayúsculas
-        boolean esCorrecto = ejercicio.getRespuesta().equalsIgnoreCase(respuesta);
-        if (esCorrecto) {
-            System.out.println("¡Respuesta correcta!");
-        } else {
-            System.out.println("Respuesta incorrecta. Inténtalo de nuevo.");
-        }
-        return esCorrecto;
-    }
-
-    public Progreso verProgreso() {
-        return this.progreso;
-    }
-
-    // GETTERS Y SETTERS
     public Progreso getProgreso() {
         return progreso;
     }
 
     public void setProgreso(Progreso progreso) {
         this.progreso = progreso;
+    }
+
+    @Override
+    public String toString() {
+        return "Estudiante{" +
+                super.toString() + // Reutiliza los datos impresos de la clase Usuario
+                ", nivel='" + nivel + '\'' +
+                ", progreso=" + (progreso != null ? "Asignado" : "No asignado") +
+                '}';
     }
 }

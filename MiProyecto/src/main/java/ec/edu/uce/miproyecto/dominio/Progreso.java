@@ -8,15 +8,24 @@ public class Progreso {
     private Date fecha;
     private int puntaje;
     private int tiempo;
+    private ItemEjercicio[] items;
 
-    public void actualizarProgreso(boolean esCorrecto) {
-        this.fecha = new Date(); // Actualiza la fecha al momento del intento
-        if (esCorrecto) {
-            this.puntaje += 10; // Suma puntos por acierto
-            this.estado = "Aprobado";
-        } else {
-            this.estado = "Reprobado";
-        }
+    public Progreso() {
+        this.idProgreso = 0;
+        this.estado = "En curso";
+        this.fecha = new Date();
+        this.puntaje = 0;
+        this.tiempo = 0;
+        this.items = new ItemEjercicio[10];
+    }
+
+    public Progreso(int idProgreso, String estado, Date fecha, int puntaje, int tiempo, ItemEjercicio[] items) {
+        this.idProgreso = idProgreso;
+        this.estado = estado;
+        this.fecha = fecha;
+        this.puntaje = puntaje;
+        this.tiempo = tiempo;
+        this.items = items;
     }
 
     public int getIdProgreso() {
@@ -59,15 +68,12 @@ public class Progreso {
         this.tiempo = tiempo;
     }
 
-    public Progreso() {
+    public ItemEjercicio[] getItems() {
+        return items;
     }
 
-    public Progreso(int idProgreso, String estado, Date fecha, int puntaje, int tiempo) {
-        this.idProgreso = idProgreso;
-        this.estado = estado;
-        this.fecha = fecha;
-        this.puntaje = puntaje;
-        this.tiempo = tiempo;
+    public void setItems(ItemEjercicio[] items) {
+        this.items = items;
     }
 
     @Override
@@ -78,6 +84,7 @@ public class Progreso {
                 ", fecha=" + fecha +
                 ", puntaje=" + puntaje +
                 ", tiempo=" + tiempo +
+                ", cantidadItems=" + (items != null ? items.length : 0) +
                 '}';
     }
 }

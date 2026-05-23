@@ -5,12 +5,16 @@ public class Pista {
     private String descripcion;
     private int orden;
 
-    // --- ESTE ES EL MÉTODO QUE FALTA Y SOLUCIONA EL ERROR ---
-    public void mostrarPista() {
-        System.out.println("\n[ AYUDA DISPONIBLE ]");
-        System.out.println("Orden de la pista: " + orden);
-        System.out.println("Sugerencia: " + descripcion);
-        System.out.println("---------------------");
+    public Pista() {
+        this.idpista = 0;
+        this.descripcion = "Sin descripción";
+        this.orden = 1;
+    }
+
+    public Pista(int idpista, String descripcion, int orden) {
+        this.idpista = idpista;
+        this.descripcion = descripcion;
+        this.orden = orden;
     }
 
     public int getIdpista() {
@@ -34,15 +38,6 @@ public class Pista {
     }
 
     public void setOrden(int orden) {
-        this.orden = orden;
-    }
-
-    public Pista(int i, String usaSustitución) {
-    }
-
-    public Pista(int idpista, String descripcion, int orden) {
-        this.idpista = idpista;
-        this.descripcion = descripcion;
         this.orden = orden;
     }
 
