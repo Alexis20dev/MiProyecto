@@ -1,7 +1,5 @@
 package ec.edu.uce.miproyecto.dominio;
 
-import java.util.ArrayList;
-
 public class Gestion {
 
     private Usuario[] listaUsuarios;
