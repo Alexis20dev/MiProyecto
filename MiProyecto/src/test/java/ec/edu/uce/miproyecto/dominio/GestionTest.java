@@ -16,8 +16,8 @@ class GestionTest {
         gestion.registrarUsuario(estudiante);
 
         // Verificamos que la lista ya no esté vacía y que contenga al estudiante registrado
-        assertEquals(1, gestion.getListaUsuarios().size(), "El usuario no se añadió correctamente a la lista.");
-        assertEquals(estudiante, gestion.getListaUsuarios().get(0), "El usuario guardado no coincide con el registrado.");
+        assertEquals(1, gestion.getListaUsuarios().length, "El usuario no se añadió correctamente a la lista.");
+        assertEquals(estudiante, gestion.getListaUsuarios()[0], "El usuario guardado no coincide con el registrado.");
     }
 
     @Test
@@ -49,10 +49,10 @@ class GestionTest {
         gestion.agregarEjercicio(ejercicio);
 
         // Verificamos que se haya añadido un elemento a la lista de ítems de ejercicio
-        assertEquals(1, gestion.getListaItemE().size(), "El ejercicio no se registró en la lista de ítems.");
+        assertEquals(1, gestion.getListaItemE().length, "El ejercicio no se registró en la lista de ítems.");
 
         // Comprobamos que el envoltorio contenga el ejercicio original y el estado inicial "Nuevo"
-        ItemEjercicio itemGuardado = gestion.getListaItemE().get(0);
+        ItemEjercicio itemGuardado = gestion.getListaItemE()[0];
         assertEquals(ejercicio, itemGuardado.getEjercicio(), "El ejercicio dentro del ítem no coincide.");
         assertEquals("Nuevo", itemGuardado.getEstado(), "El estado inicial del ítem debería ser 'Nuevo'.");
     }
@@ -63,19 +63,17 @@ class GestionTest {
 
         // Al instanciarse, la lista debe estar inicializada y vacía (no nula)
         assertNotNull(gestion.getListaUsuarios(), "La lista de usuarios debería inicializarse vacía, no nula.");
-        assertTrue(gestion.getListaUsuarios().isEmpty(), "La lista de usuarios debería estar vacía al iniciar.");
+        assertEquals(0,gestion.getListaUsuarios(), "La lista de usuarios debería estar vacía al iniciar.");
     }
 
     @Test
     void setListaUsuarios() {
         Gestion gestion = new Gestion();
-        ArrayList<Usuario> nuevaLista = new ArrayList<>();
-        nuevaLista.add(new Docente(3, "Dr. Espinoza", "espinoza@uce.edu.ec", "9876", new Date(), "Álgebra"));
-
+        Usuario[] nuevaLista = new Usuario[100];
         gestion.setListaUsuarios(nuevaLista);
 
         assertEquals(nuevaLista, gestion.getListaUsuarios(), "La lista de usuarios no se reemplazó correctamente.");
-        assertEquals(1, gestion.getListaUsuarios().size(), "El tamaño de la lista reemplazada no coincide.");
+        assertEquals(1, gestion.getListaUsuarios().length, "El tamaño de la lista reemplazada no coincide.");
     }
 
     @Test
@@ -83,15 +81,14 @@ class GestionTest {
         Gestion gestion = new Gestion();
 
         assertNotNull(gestion.getListaTemas(), "La lista de temas no debería ser nula.");
-        assertEquals(0, gestion.getListaTemas().size(), "La lista de temas debería empezar con tamaño 0.");
+        assertEquals(0, gestion.getListaTemas().length, "La lista de temas debería empezar con tamaño 0.");
     }
 
     @Test
     void setListaTemas() {
         Gestion gestion = new Gestion();
-        ArrayList<Tema> nuevaListaTemas = new ArrayList<>();
-        nuevaListaTemas.add(new Tema(1, "Límites", "Cálculo", new Concepto[0], new Ejercicio[0]));
 
+        Tema[] nuevaListaTemas = new Tema[100];
         gestion.setListaTemas(nuevaListaTemas);
 
         assertEquals(nuevaListaTemas, gestion.getListaTemas(), "La lista de temas no se asignó correctamente.");
@@ -107,9 +104,8 @@ class GestionTest {
     @Test
     void setListaItemE() {
         Gestion gestion = new Gestion();
-        ArrayList<ItemEjercicio> nuevaListaItems = new ArrayList<>();
-        nuevaListaItems.add(new ItemEjercicio(new Ejercicio(), "Completado"));
 
+        ItemEjercicio[] nuevaListaItems = new ItemEjercicio[100];
         gestion.setListaItemE(nuevaListaItems);
 
         assertEquals(nuevaListaItems, gestion.getListaItemE(), "La lista de ítems de ejercicio no se modificó correctamente.");

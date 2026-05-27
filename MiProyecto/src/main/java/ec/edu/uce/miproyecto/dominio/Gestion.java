@@ -4,25 +4,37 @@ import java.util.ArrayList;
 
 public class Gestion {
 
-    private ArrayList<Usuario> listaUsuarios;
-    private ArrayList<Tema> listaTemas;
-    private ArrayList<ItemEjercicio> listaItemE;
+    private Usuario[] listaUsuarios;
+    private Tema[] listaTemas;
+    private ItemEjercicio[] listaItemE;
+
+    private int numUsuarios;
+    private int numTemas;
+    private int numItemE;
 
     public Gestion() {
-        this.listaUsuarios = new ArrayList<>();
-        this.listaTemas = new ArrayList<>();
-        this.listaItemE = new ArrayList<>();
+        listaUsuarios = new Usuario[100];
+        listaTemas = new Tema[100];
+        listaItemE = new ItemEjercicio[100];
+
+        numUsuarios = 0;
+        numTemas = 0;
+        numItemE = 0;
     }
 
     public void registrarUsuario(Usuario usuario) {
-        if (usuario != null) {
-            this.listaUsuarios.add(usuario);
+        if (usuario != null && numUsuarios < listaUsuarios.length) {
+            listaUsuarios[numUsuarios] = usuario;
+            numUsuarios++;
         }
     }
 
     public Usuario buscarUsuarioPorCorreo(String credencial) {
-        for (Usuario u : listaUsuarios) {
-            if (u.getEmail().equalsIgnoreCase(credencial) || u.getNombre().equalsIgnoreCase(credencial)) {
+        for (int i = 0; i < numUsuarios; i++) {
+            Usuario u = listaUsuarios[i];
+
+            if (u.getEmail().equalsIgnoreCase(credencial)
+                    || u.getNombre().equalsIgnoreCase(credencial)) {
                 return u;
             }
         }
@@ -30,42 +42,55 @@ public class Gestion {
     }
 
     public void agregarEjercicio(Ejercicio ejercicio) {
-        if (ejercicio != null) {
+        if (ejercicio != null && numItemE < listaItemE.length) {
             ItemEjercicio nuevoItem = new ItemEjercicio(ejercicio, "Nuevo");
-            this.listaItemE.add(nuevoItem);
+            listaItemE[numItemE] = nuevoItem;
+            numItemE++;
         }
     }
 
-    public ArrayList<Usuario> getListaUsuarios() {
+    public Usuario[] getListaUsuarios() {
         return listaUsuarios;
     }
 
-    public void setListaUsuarios(ArrayList<Usuario> listaUsuarios) {
-        this.listaUsuarios = listaUsuarios;
-    }
-
-    public ArrayList<Tema> getListaTemas() {
+    public Tema[] getListaTemas() {
         return listaTemas;
     }
 
-    public void setListaTemas(ArrayList<Tema> listaTemas) {
-        this.listaTemas = listaTemas;
-    }
-
-    public ArrayList<ItemEjercicio> getListaItemE() {
+    public ItemEjercicio[] getListaItemE() {
         return listaItemE;
     }
 
-    public void setListaItemE(ArrayList<ItemEjercicio> listaItemE) {
-        this.listaItemE = listaItemE;
+    public int getNumUsuarios() {
+        return numUsuarios;
+    }
+
+    public int getNumTemas() {
+        return numTemas;
+    }
+
+    public int getNumItemE() {
+        return numItemE;
     }
 
     @Override
     public String toString() {
         return "Gestion{" +
-                "listaUsuarios=" + listaUsuarios +
-                ", listaTemas=" + listaTemas +
-                ", listaItemE=" + listaItemE +
+                "numUsuarios=" + numUsuarios +
+                ", numTemas=" + numTemas +
+                ", numItemE=" + numItemE +
                 '}';
+    }
+
+    public void setListaUsuarios(Usuario[] listaUsuarios) {
+        this.listaUsuarios = listaUsuarios;
+    }
+
+    public void setListaTemas(Tema[] nuevaListaTemas) {
+        this.listaTemas = listaTemas;
+    }
+
+    public void setListaItemE(ItemEjercicio[] nuevaListaItems) {
+        this.listaItemE = listaItemE;
     }
 }
