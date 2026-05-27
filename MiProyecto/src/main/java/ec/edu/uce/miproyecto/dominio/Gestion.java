@@ -30,9 +30,8 @@ public class Gestion {
     public Usuario buscarUsuarioPorCorreo(String credencial) {
         for (int i = 0; i < numUsuarios; i++) {
             Usuario u = listaUsuarios[i];
-
-            if (u.getEmail().equalsIgnoreCase(credencial)
-                    || u.getNombre().equalsIgnoreCase(credencial)) {
+            // Validamos que 'u' no sea nulo antes de extraer sus datos para evitar NullPointerException
+            if (u != null && (u.getEmail().equalsIgnoreCase(credencial) || u.getNombre().equalsIgnoreCase(credencial))) {
                 return u;
             }
         }
@@ -47,29 +46,13 @@ public class Gestion {
         }
     }
 
-    public Usuario[] getListaUsuarios() {
-        return listaUsuarios;
-    }
+    public Usuario[] getListaUsuarios() { return listaUsuarios; }
+    public Tema[] getListaTemas() { return listaTemas; }
+    public ItemEjercicio[] getListaItemE() { return listaItemE; }
 
-    public Tema[] getListaTemas() {
-        return listaTemas;
-    }
-
-    public ItemEjercicio[] getListaItemE() {
-        return listaItemE;
-    }
-
-    public int getNumUsuarios() {
-        return numUsuarios;
-    }
-
-    public int getNumTemas() {
-        return numTemas;
-    }
-
-    public int getNumItemE() {
-        return numItemE;
-    }
+    public int getNumUsuarios() { return numUsuarios; }
+    public int getNumTemas() { return numTemas; }
+    public int getNumItemE() { return numItemE; }
 
     @Override
     public String toString() {
@@ -82,13 +65,25 @@ public class Gestion {
 
     public void setListaUsuarios(Usuario[] listaUsuarios) {
         this.listaUsuarios = listaUsuarios;
+        this.numUsuarios = 0;
+        if (listaUsuarios != null) {
+            for (Usuario u : listaUsuarios) if (u != null) this.numUsuarios++;
+        }
     }
 
     public void setListaTemas(Tema[] nuevaListaTemas) {
-        this.listaTemas = listaTemas;
+        this.listaTemas = nuevaListaTemas; // ✨ Corregido
+        this.numTemas = 0;
+        if (nuevaListaTemas != null) {
+            for (Tema t : nuevaListaTemas) if (t != null) this.numTemas++;
+        }
     }
 
     public void setListaItemE(ItemEjercicio[] nuevaListaItems) {
-        this.listaItemE = listaItemE;
+        this.listaItemE = nuevaListaItems; // ✨ Corregido
+        this.numItemE = 0;
+        if (nuevaListaItems != null) {
+            for (ItemEjercicio item : nuevaListaItems) if (item != null) this.numItemE++;
+        }
     }
 }

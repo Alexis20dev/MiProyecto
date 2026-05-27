@@ -163,8 +163,7 @@ public class MenuPrincipal {
                         sc.nextLine();
                         String nuevoEnunciado = sc.nextLine();
 
-                        int siguienteId = controlador.getListaItemE().size() + 1;
-                        Ejercicio nuevoEj = new Ejercicio(siguienteId, nuevoEnunciado, "0", "Medio", new Pista[0]);
+                        int siguienteId = controlador.getNumItemE() + 1;                        Ejercicio nuevoEj = new Ejercicio(siguienteId, nuevoEnunciado, "0", "Medio", new Pista[0]);
 
                         controlador.agregarEjercicio(nuevoEj);
                         Consola.info("Ejercicio registrado con éxito en el controlador central como ItemEjercicio.");
