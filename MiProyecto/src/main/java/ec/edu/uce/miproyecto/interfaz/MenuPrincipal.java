@@ -113,19 +113,15 @@ public class MenuPrincipal {
         Usuario usuarioLogueado = controlador.buscarUsuarioPorCorreo(credencialInput);
 
         if (usuarioLogueado == null) {
-            // ❌ CASO A: El correo no está registrado
             Consola.error("El correo electrónico '" + credencialInput + "' no está registrado en el sistema.");
             return; // Cortamos la ejecución aquí para que intente de nuevo
         }
 
-        // 2. Si el usuario existe, validamos si la contraseña coincide
         if (!usuarioLogueado.getContrasena().equals(passwordInput)) {
-            // ❌ CASO B: El usuario existe, pero la contraseña está mal
             Consola.error("Contraseña incorrecta para el usuario: " + usuarioLogueado.getNombre() + ". Intente de nuevo.");
             return; // Cortamos la ejecución
         }
 
-        // 3. Si pasó los dos filtros anteriores, las credenciales son correctas
         if (usuarioLogueado instanceof Estudiante) {
             Estudiante estudiante = (Estudiante) usuarioLogueado;
             Consola.exitoLogin("ESTUDIANTE");

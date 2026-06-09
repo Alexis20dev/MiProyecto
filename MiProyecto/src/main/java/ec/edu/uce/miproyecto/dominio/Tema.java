@@ -12,8 +12,8 @@ public class Tema {
         this.idTema = 0;
         this.nombre = "Sin nombre";
         this.descripcion = "Sin descripción";
-        this.conceptos = new Concepto[5];   // Espacio por defecto para 5 conceptos
-        this.ejercicios = new Ejercicio[5]; // Espacio por defecto para 5 ejercicios
+        this.conceptos = new Concepto[5];
+        this.ejercicios = new Ejercicio[5];
     }
 
     public Tema(int idTema, String nombre, String descripcion, Concepto[] conceptos, Ejercicio[] ejercicios) {

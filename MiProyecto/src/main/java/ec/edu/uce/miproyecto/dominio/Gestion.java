@@ -30,7 +30,6 @@ public class Gestion {
     public Usuario buscarUsuarioPorCorreo(String credencial) {
         for (int i = 0; i < numUsuarios; i++) {
             Usuario u = listaUsuarios[i];
-            // Validamos que 'u' no sea nulo antes de extraer sus datos para evitar NullPointerException
             if (u != null && (u.getEmail().equalsIgnoreCase(credencial) || u.getNombre().equalsIgnoreCase(credencial))) {
                 return u;
             }

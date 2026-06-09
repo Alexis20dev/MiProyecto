@@ -79,7 +79,20 @@ public class Usuario {
     public void setFechaRegistro(Date fechaRegistro) {
         this.fechaRegistro = fechaRegistro;
     }
+    @Override
+    public boolean equals(Object o) {
 
+        if (this == o) {
+            return true;
+        }
+        if (o == null || this.getClass() != o.getClass()) {
+            return false;
+        }
+
+        Usuario otroUsuario = (Usuario) o;
+
+        return this.idUsuario == otroUsuario.idUsuario;
+    }
     @Override
     public String toString() {
         return "idUsuario=" + idUsuario +
