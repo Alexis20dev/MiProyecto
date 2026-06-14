@@ -5,7 +5,12 @@ import java.util.Date;
 import static org.junit.jupiter.api.Assertions.*;
 
 class DocenteTest {
-
+    @Test
+    void verProgreso() {
+        Date fechaPrueba = new Date();
+        Usuario docente = new Docente(2, "Ing. Lara", "lara@uce.edu.ec", "abcd", fechaPrueba, "Sistemas");
+        assertDoesNotThrow(() -> docente.verProgreso(), "El método verProgreso() en Docente no debería lanzar ninguna excepción.");
+    }
     @Test
     void getEspecialidad() {
         Date fechaPrueba = new Date();

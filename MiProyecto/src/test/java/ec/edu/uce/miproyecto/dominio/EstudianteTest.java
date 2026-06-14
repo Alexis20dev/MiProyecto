@@ -5,7 +5,14 @@ import java.util.Date;
 import static org.junit.jupiter.api.Assertions.*;
 
 class EstudianteTest {
+    @Test
+    void verProgreso() {
+        Date fechaPrueba = new Date();
+        Progreso progresoSimulado = new Progreso();
+        Usuario estudiante = new Estudiante(1, "Jeremy", "jeremy@uce.edu.ec", "1234", fechaPrueba, "Principiante", progresoSimulado);
 
+        assertDoesNotThrow(() -> estudiante.verProgreso(), "El método verProgreso() en Estudiante no debería lanzar ninguna excepción.");
+    }
     @Test
     void getNivel() {
         Date fechaPrueba = new Date();
@@ -21,7 +28,7 @@ class EstudianteTest {
         Progreso progresoSimulado = new Progreso();
         Estudiante estudiante = new Estudiante(1, "Jeremy", "jeremy@uce.edu.ec", "1234", fechaPrueba, "Principiante", progresoSimulado);
 
-        estudiante.setLevel("Avanzado");
+        estudiante.setNivel("Avanzado");
 
         assertEquals("Avanzado", estudiante.getNivel(), "El nivel no se modificó correctamente con el método setLevel.");
     }
