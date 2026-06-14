@@ -39,4 +39,25 @@ public class Consola {
     public static void exitoLogin(String rol) {
         System.out.println("\n🔑 ¡Inicio de sesión exitoso como " + rol + "!");
     }
+    public static void mostrarProgresoEstudiante(String nombre, String nivel, String estado, int puntaje, int tiempo, boolean tieneProgreso) {
+        System.out.println("\n----------------------------------------");
+        System.out.println("     PROGRESO DEL ESTUDIANTE: " + nombre);
+        System.out.println("----------------------------------------");
+        System.out.println("• Nivel de aprendizaje: " + nivel);
+
+        if (tieneProgreso) {
+            System.out.println("• Estado del módulo: " + estado);
+            System.out.println("• Puntaje acumulado: " + puntaje + " pts");
+            System.out.println("• Tiempo invertido: " + tiempo + " minutos");
+        } else {
+            System.out.println(" No se registran datos de progreso todavía.");
+        }
+    }
+    public static void mostrarProgresoDocente(String nombre, String especialidad) {
+        System.out.println("\n----------------------------------------");
+        System.out.println(" 👨‍🏫 VISTA DE CONTROL - DOCENTE: " + nombre);
+        System.out.println("----------------------------------------");
+        System.out.println("• Especialidad a cargo: " + especialidad);
+        System.out.println("• Acceso: Autorizado para la revisión y gestión de reactivos.");
+    }
 }

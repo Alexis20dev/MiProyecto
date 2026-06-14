@@ -4,7 +4,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Validaciones {
-    // Validar que solo sean números
     public static boolean validarNumero(String texto) {
         Pattern pattern = Pattern.compile("\\d+");
         Matcher matcher = pattern.matcher(texto);
@@ -15,8 +14,6 @@ public class Validaciones {
             return false;
         }
     }
-
-    // Validar que solo sean letras
     public static boolean validarNombre(String texto) {
         Pattern pattern = Pattern.compile("[a-zA-ZáéíóúÁÉÍÓÚ ]+");
         Matcher matcher = pattern.matcher(texto);

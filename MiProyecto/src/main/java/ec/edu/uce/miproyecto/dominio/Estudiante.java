@@ -2,8 +2,9 @@ package ec.edu.uce.miproyecto.dominio;
 
 import java.util.Date;
 
-public class Estudiante extends Usuario {
-    private String nivel;
+import static ec.edu.uce.miproyecto.util.Consola.mostrarProgresoEstudiante;
+
+public final class Estudiante extends Usuario {    private String nivel;
     private Progreso progreso;
 
     public Estudiante() {
@@ -18,12 +19,20 @@ public class Estudiante extends Usuario {
         this.nivel = nivel;
         this.progreso = progreso;
     }
+    @Override
+    public void verProgreso() {
+        boolean tieneProgreso = (this.progreso != null);
+        String estado = tieneProgreso ? this.progreso.getEstado() : "";
+        int puntaje = tieneProgreso ? this.progreso.getPuntaje() : 0;
+        int tiempo = tieneProgreso ? this.progreso.getTiempo() : 0;
+
+        mostrarProgresoEstudiante(this.nombre, this.nivel, estado, puntaje, tiempo, tieneProgreso);
+    }
 
     public String getNivel() {
         return nivel;
     }
-
-    public void setLevel(String nivel) {
+    public void setNivel(String nivel) {
         this.nivel = nivel;
     }
 
@@ -38,7 +47,7 @@ public class Estudiante extends Usuario {
     @Override
     public String toString() {
         return "Estudiante{" +
-                super.toString() + // Reutiliza los datos impresos de la clase Usuario
+                super.toString() +
                 ", nivel='" + nivel + '\'' +
                 ", progreso=" + (progreso != null ? "Asignado" : "No asignado") +
                 '}';

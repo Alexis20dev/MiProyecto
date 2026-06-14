@@ -2,13 +2,13 @@ package ec.edu.uce.miproyecto.dominio;
 
 import java.util.Date;
 
-public class Usuario {
+public abstract class Usuario {
 
-    private int idUsuario;
-    private String nombre;
-    private String email;
-    private String contrasena;
-    private Date fechaRegistro;
+    protected int idUsuario;
+    protected String nombre;
+    protected String email;
+    protected String contrasena;
+    protected Date fechaRegistro;
 
     public Usuario() {
         this.idUsuario = 0;
@@ -27,7 +27,7 @@ public class Usuario {
     }
 
 
-    public boolean iniciarSesion(String username, String password) {
+    public final boolean iniciarSesion(String username, String password) {
         return (this.nombre.equalsIgnoreCase(username) || this.email.equalsIgnoreCase(username))
                 && this.contrasena.equals(password);
     }
@@ -36,9 +36,7 @@ public class Usuario {
         return false;
     }
 
-    public void verProgreso() {
-
-    }
+    public abstract void verProgreso();
 
     public int getIdUsuario() {
         return idUsuario;
