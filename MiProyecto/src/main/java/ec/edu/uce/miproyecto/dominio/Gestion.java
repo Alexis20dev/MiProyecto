@@ -14,17 +14,74 @@ public class Gestion {
         listaUsuarios = new Usuario[100];
         listaTemas = new Tema[100];
         listaItemE = new ItemEjercicio[100];
-
         numUsuarios = 0;
         numTemas = 0;
         numItemE = 0;
     }
 
+    public boolean validarDuplicado(Object o) {
+        if (o == null || !(o instanceof Usuario)) {
+            return false;
+        }
+        Usuario nuevoUsuario = (Usuario) o;
+        for (int i = 0; i < numUsuarios; i++) {
+            if (listaUsuarios[i] != null && listaUsuarios[i].equals(nuevoUsuario)) {
+                System.out.println("❌ Error: El usuario ya existe.");
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private void expandirUsuarios() {
+        Usuario[] aux = new Usuario[listaUsuarios.length * 2];
+        System.arraycopy(listaUsuarios, 0, aux, 0, listaUsuarios.length);
+        this.listaUsuarios = aux;
+    }
+
     public void registrarUsuario(Usuario usuario) {
-        if (usuario != null && numUsuarios < listaUsuarios.length) {
+        if (usuario == null) return;
+
+        if (!validarDuplicado(usuario)) {
+            if (numUsuarios >= listaUsuarios.length) {
+                expandirUsuarios();
+            }
             listaUsuarios[numUsuarios] = usuario;
             numUsuarios++;
         }
+    }
+
+    public void registrarUsuario(Usuario[] nuevosUsuarios) {
+        if (nuevosUsuarios == null) return;
+        for (Usuario u : nuevosUsuarios) {
+            if (u != null) {
+                registrarUsuario(u);
+            }
+        }
+    }
+
+    // ✨ ESTE ES EL MÉTODO QUE LE FALTA A TU ARCHIVO PARA QUITAR EL ERROR ROJO
+    public String consultarUsuarios() {
+        String texto = "== LISTA DE USUARIOS REGISTRADOS ==\n";
+        for (int i = 0; i < numUsuarios; i++) {
+            if (listaUsuarios[i] != null) {
+                texto += listaUsuarios[i].toString() + "\n";
+            }
+        }
+        if (numUsuarios == 0) {
+            texto += "No hay usuarios registrados en el sistema.\n";
+        }
+        return texto;
+    }
+
+    public boolean editarUsuario(int pos, String nombre, String email, String contrasena) {
+        if (pos >= 0 && pos < numUsuarios && listaUsuarios[pos] != null) {
+            listaUsuarios[pos].setNombre(nombre);
+            listaUsuarios[pos].setEmail(email);
+            listaUsuarios[pos].setContrasena(contrasena);
+            return true;
+        }
+        return false;
     }
 
     public Usuario buscarUsuarioPorCorreo(String credencial) {
@@ -46,43 +103,6 @@ public class Gestion {
     }
 
     public Usuario[] getListaUsuarios() { return listaUsuarios; }
-    public Tema[] getListaTemas() { return listaTemas; }
-    public ItemEjercicio[] getListaItemE() { return listaItemE; }
-
     public int getNumUsuarios() { return numUsuarios; }
-    public int getNumTemas() { return numTemas; }
     public int getNumItemE() { return numItemE; }
-
-    @Override
-    public String toString() {
-        return "Gestion{" +
-                "numUsuarios=" + numUsuarios +
-                ", numTemas=" + numTemas +
-                ", numItemE=" + numItemE +
-                '}';
-    }
-
-    public void setListaUsuarios(Usuario[] listaUsuarios) {
-        this.listaUsuarios = listaUsuarios;
-        this.numUsuarios = 0;
-        if (listaUsuarios != null) {
-            for (Usuario u : listaUsuarios) if (u != null) this.numUsuarios++;
-        }
-    }
-
-    public void setListaTemas(Tema[] nuevaListaTemas) {
-        this.listaTemas = nuevaListaTemas; // ✨ Corregido
-        this.numTemas = 0;
-        if (nuevaListaTemas != null) {
-            for (Tema t : nuevaListaTemas) if (t != null) this.numTemas++;
-        }
-    }
-
-    public void setListaItemE(ItemEjercicio[] nuevaListaItems) {
-        this.listaItemE = nuevaListaItems; // ✨ Corregido
-        this.numItemE = 0;
-        if (nuevaListaItems != null) {
-            for (ItemEjercicio item : nuevaListaItems) if (item != null) this.numItemE++;
-        }
-    }
 }

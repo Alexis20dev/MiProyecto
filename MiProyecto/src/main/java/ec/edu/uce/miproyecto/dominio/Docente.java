@@ -1,4 +1,5 @@
 package ec.edu.uce.miproyecto.dominio;
+
 import java.util.Date;
 import static ec.edu.uce.miproyecto.util.Consola.mostrarProgresoDocente;
 
@@ -11,8 +12,8 @@ public final class Docente extends Usuario {
         this.especialidad = "Sin especialidad";
     }
 
-    public Docente(int idUsuario, String nombre, String email, String contrasena, Date fechaRegistro, String especialidad) {
-        super(idUsuario, nombre, email, contrasena, fechaRegistro);
+    public Docente(String nombre, String email, String contrasena, Date fechaRegistro, Genero genero, String especialidad) {
+        super(nombre, email, contrasena, fechaRegistro, genero);
         this.especialidad = especialidad;
     }
 
@@ -20,9 +21,11 @@ public final class Docente extends Usuario {
     public void verProgreso() {
         mostrarProgresoDocente(this.nombre, this.especialidad);
     }
+
     public String getEspecialidad() {
         return especialidad;
     }
+
     public void setEspecialidad(String especialidad) {
         this.especialidad = especialidad;
     }

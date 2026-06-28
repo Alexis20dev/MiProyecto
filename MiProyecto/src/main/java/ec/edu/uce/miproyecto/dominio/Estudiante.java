@@ -13,9 +13,8 @@ public final class Estudiante extends Usuario {    private String nivel;
         this.progreso = new Progreso();
     }
 
-    public Estudiante(int idUsuario, String nombre, String email, String contrasena, Date fechaRegistro,
-                      String nivel, Progreso progreso) {
-        super(idUsuario, nombre, email, contrasena, fechaRegistro);
+    public Estudiante(String nombre, String email, String contrasena, Date fechaRegistro, Genero genero, String nivel, Progreso progreso) {
+        super(nombre, email, contrasena, fechaRegistro, genero);
         this.nivel = nivel;
         this.progreso = progreso;
     }
