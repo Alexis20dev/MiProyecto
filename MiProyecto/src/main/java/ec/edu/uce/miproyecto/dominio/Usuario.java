@@ -4,7 +4,7 @@ import java.util.Date;
 
 public abstract class Usuario {
 
-    protected int idUsuario;
+    protected final int idUsuario;
     protected String nombre;
     protected String email;
     protected String contrasena;
@@ -17,9 +17,9 @@ public abstract class Usuario {
         this.idUsuario = contadorId;
         this.nombre = "Sin nombre";
         this.email = "Sin email";
-        this.contrasena = "1234";
+        this.contrasena = "Sin contraseña";
         this.fechaRegistro = new Date();
-        this.genero = Genero.M;
+        this.genero = Genero.valueOf("sin genero");
     }
 
     public Usuario(String nombre, String email, String contrasena, Date fechaRegistro, Genero genero) {
@@ -31,8 +31,15 @@ public abstract class Usuario {
         this.fechaRegistro = fechaRegistro;
         this.genero = genero;
     }
-    public Genero getGenero() { return genero; }
-    public void setGenero(Genero genero) { this.genero = genero; }
+
+    public Usuario(Usuario usuario) {
+        this.idUsuario= usuario.idUsuario;
+        this.nombre = usuario.nombre;
+        this.email = usuario.email;
+        this.contrasena = usuario.contrasena;
+        this.fechaRegistro = usuario.fechaRegistro;
+        this.genero = usuario.genero;
+    }
 
     public final boolean iniciarSesion(String username, String password) {
         return (this.nombre.equalsIgnoreCase(username) || this.email.equalsIgnoreCase(username))
@@ -44,9 +51,6 @@ public abstract class Usuario {
     }
 
     public abstract void verProgreso();
-
-    public int getIdUsuario() { return idUsuario; }
-    public void setIdUsuario(int idUsuario) { this.idUsuario = idUsuario; }
 
     public String getNombre() { return nombre; }
     public void setNombre(String nombre) { this.nombre = nombre; }
@@ -60,12 +64,13 @@ public abstract class Usuario {
     public Date getFechaRegistro() { return fechaRegistro; }
     public void setFechaRegistro(Date fechaRegistro) { this.fechaRegistro = fechaRegistro; }
 
+    public Genero getGenero() { return genero; }
+    public void setGenero(Genero genero) { this.genero = genero; }
     @Override
     public boolean equals(Object o) {
         if (this == o) {
             return true;
         }
-
         if (!(o instanceof Usuario)) {
             return false;
         }
