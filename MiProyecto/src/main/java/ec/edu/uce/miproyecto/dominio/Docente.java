@@ -1,5 +1,7 @@
 package ec.edu.uce.miproyecto.dominio;
 
+import ec.edu.uce.miproyecto.enums.Genero;
+
 import java.util.Date;
 import static ec.edu.uce.miproyecto.util.Consola.mostrarProgresoDocente;
 
@@ -15,6 +17,11 @@ public final class Docente extends Usuario {
     public Docente(String nombre, String email, String contrasena, Date fechaRegistro, Genero genero, String especialidad) {
         super(nombre, email, contrasena, fechaRegistro, genero);
         this.especialidad = especialidad;
+    }
+
+    public Docente(Docente d) {
+        super();
+        this.especialidad = d.especialidad;
     }
 
     @Override

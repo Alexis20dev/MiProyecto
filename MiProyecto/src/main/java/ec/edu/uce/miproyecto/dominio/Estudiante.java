@@ -1,10 +1,13 @@
 package ec.edu.uce.miproyecto.dominio;
 
+import ec.edu.uce.miproyecto.enums.Genero;
+
 import java.util.Date;
 
 import static ec.edu.uce.miproyecto.util.Consola.mostrarProgresoEstudiante;
 
-public final class Estudiante extends Usuario {    private String nivel;
+public final class Estudiante extends Usuario {
+    private String nivel;
     private Progreso progreso;
 
     public Estudiante() {
@@ -17,6 +20,12 @@ public final class Estudiante extends Usuario {    private String nivel;
         super(nombre, email, contrasena, fechaRegistro, genero);
         this.nivel = nivel;
         this.progreso = progreso;
+    }
+
+    public Estudiante (Estudiante e){
+        super(e);
+        this.nivel = e.nivel;
+        this.progreso = e.progreso;
     }
     @Override
     public void verProgreso() {

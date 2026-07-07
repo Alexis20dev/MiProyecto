@@ -4,22 +4,23 @@ import java.util.Arrays;
 
 public class Ejercicio {
 
-    private int idEjercicio;
+    private final int idEjercicio;
+    private static int idEjercicioContador =0;
     private String enunciado;
     private String respuesta;
     private String dificultad;
     private Pista[] pistas;
 
     public Ejercicio() {
-        this.idEjercicio = 0;
+        this.idEjercicio = idEjercicioContador++;
         this.enunciado = "Sin enunciado";
         this.respuesta = "Sin respuesta";
         this.dificultad = "Baja";
         this.pistas = new Pista[3];
     }
 
-    public Ejercicio(int idEjercicio, String enunciado, String respuesta, String dificultad, Pista[] pistas) {
-        this.idEjercicio = idEjercicio;
+    public Ejercicio(String enunciado, String respuesta, String dificultad, Pista[] pistas) {
+        this.idEjercicio = idEjercicioContador++;
         this.enunciado = enunciado;
         this.respuesta = respuesta;
         this.dificultad = dificultad;
@@ -29,39 +30,27 @@ public class Ejercicio {
     public int getIdEjercicio() {
         return idEjercicio;
     }
-
-    public void setIdEjercicio(int idEjercicio) {
-        this.idEjercicio = idEjercicio;
-    }
-
     public String getEnunciado() {
         return enunciado;
     }
-
     public void setEnunciado(String enunciado) {
         this.enunciado = enunciado;
     }
-
     public String getRespuesta() {
         return respuesta;
     }
-
     public void setRespuesta(String respuesta) {
         this.respuesta = respuesta;
     }
-
     public String getDificultad() {
         return dificultad;
     }
-
     public void setDificultad(String dificultad) {
         this.dificultad = dificultad;
     }
-
     public Pista[] getPistas() {
         return pistas;
     }
-
     public void setPistas(Pista[] pistas) {
         this.pistas = pistas;
     }

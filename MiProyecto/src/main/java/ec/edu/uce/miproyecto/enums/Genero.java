@@ -1,8 +1,9 @@
-package ec.edu.uce.miproyecto.dominio;
+package ec.edu.uce.miproyecto.enums;
 
 public enum Genero {
-    F("F", "Femenino"),
-    M("M", "Masculino");
+    S("Sin genero","SN"),
+    F("Femenino", "F"),
+    M("Masculino", "M");
     private final String descripcion;
     private final String abreviacion;
 

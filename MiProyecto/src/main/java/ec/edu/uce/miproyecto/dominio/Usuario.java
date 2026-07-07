@@ -1,5 +1,7 @@
 package ec.edu.uce.miproyecto.dominio;
 
+import ec.edu.uce.miproyecto.enums.Genero;
+
 import java.util.Date;
 
 public abstract class Usuario {
@@ -13,18 +15,16 @@ public abstract class Usuario {
     protected Genero genero;
 
     public Usuario() {
-        contadorId++;
-        this.idUsuario = contadorId;
+        this.idUsuario = contadorId++;
         this.nombre = "Sin nombre";
         this.email = "Sin email";
         this.contrasena = "Sin contraseña";
         this.fechaRegistro = new Date();
-        this.genero = Genero.valueOf("sin genero");
+        this.genero = Genero.S;
     }
 
     public Usuario(String nombre, String email, String contrasena, Date fechaRegistro, Genero genero) {
-        contadorId++;
-        this.idUsuario = contadorId;
+        this.idUsuario = contadorId++;
         this.nombre = nombre;
         this.email = email;
         this.contrasena = contrasena;
@@ -52,8 +52,15 @@ public abstract class Usuario {
 
     public abstract void verProgreso();
 
+    public int  getIdUsuario() {
+        return idUsuario;
+    }
     public String getNombre() { return nombre; }
-    public void setNombre(String nombre) { this.nombre = nombre; }
+    public void setNombre(String nombre) {
+        if(nombre != null && !nombre.equals("")){
+        this.nombre = nombre;
+        }
+    }
 
     public String getEmail() { return email; }
     public void setEmail(String email) { this.email = email; }
@@ -64,8 +71,18 @@ public abstract class Usuario {
     public Date getFechaRegistro() { return fechaRegistro; }
     public void setFechaRegistro(Date fechaRegistro) { this.fechaRegistro = fechaRegistro; }
 
-    public Genero getGenero() { return genero; }
-    public void setGenero(Genero genero) { this.genero = genero; }
+
+//    @Override
+//    public boolean equals(Object o) {
+//        boolean resp=false;
+//        if (o instanceof Usuario) {
+//            Usuario u= ((Usuario) o);
+//            if(this.nombre.equals(u.getNombre()))
+//                return true;
+//        }
+//        return resp;
+//    }
+//
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -75,7 +92,6 @@ public abstract class Usuario {
             return false;
         }
         Usuario otroUsuario = (Usuario) o;
-
         return this.idUsuario == otroUsuario.idUsuario;
     }
 

@@ -1,5 +1,8 @@
 package ec.edu.uce.miproyecto.dominio;
 
+import ec.edu.uce.miproyecto.enums.EstadoEjercicio;
+import ec.edu.uce.miproyecto.enums.EstadoTema;
+
 public class Gestion {
 
     private Usuario[] listaUsuarios;
@@ -39,16 +42,20 @@ public class Gestion {
         this.listaUsuarios = aux;
     }
 
-    public void registrarUsuario(Usuario usuario) {
-        if (usuario == null) return;
-
-        if (!validarDuplicado(usuario)) {
-            if (numUsuarios >= listaUsuarios.length) {
-                expandirUsuarios();
-            }
-            listaUsuarios[numUsuarios] = usuario;
-            numUsuarios++;
+    public boolean registrarUsuario(Usuario usuario) {
+        if (usuario == null) {
+            return false;
         }
+
+        if (validarDuplicado(usuario)) {
+            return false;
+        }
+        if (numUsuarios >= listaUsuarios.length) {
+            expandirUsuarios();
+        }
+        listaUsuarios[numUsuarios] = usuario;
+        numUsuarios++;
+        return true;
     }
 
     public void registrarUsuario(Usuario[] nuevosUsuarios) {
@@ -96,7 +103,7 @@ public class Gestion {
 
     public void agregarEjercicio(Ejercicio ejercicio) {
         if (ejercicio != null && numItemE < listaItemE.length) {
-            ItemEjercicio nuevoItem = new ItemEjercicio(ejercicio, "Nuevo");
+            ItemEjercicio nuevoItem = new ItemEjercicio(ejercicio, EstadoEjercicio.Pendiente);
             listaItemE[numItemE] = nuevoItem;
             numItemE++;
         }
@@ -105,4 +112,7 @@ public class Gestion {
     public Usuario[] getListaUsuarios() { return listaUsuarios; }
     public int getNumUsuarios() { return numUsuarios; }
     public int getNumItemE() { return numItemE; }
+
+    public void setListaUsuarios(Usuario[] nuevaLista) {
+    }
 }

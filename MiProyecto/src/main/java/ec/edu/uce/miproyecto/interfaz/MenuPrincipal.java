@@ -1,6 +1,7 @@
 package ec.edu.uce.miproyecto.interfaz;
 
 import ec.edu.uce.miproyecto.dominio.*;
+import ec.edu.uce.miproyecto.enums.Genero;
 import ec.edu.uce.miproyecto.util.Validaciones;
 import ec.edu.uce.miproyecto.util.Consola; // 🚀 Importamos tu nueva clase de textos
 import java.util.Scanner;
@@ -12,8 +13,8 @@ public class MenuPrincipal {
 
     public MenuPrincipal() {
         Progreso progresoInicial = new Progreso();
-        Estudiante ePrueba = new Estudiante(1, "Jeremy", "jeremy@uce.edu.ec", "1234", new Date(), "Principiante", progresoInicial);
-        Docente dPrueba = new Docente(2, "Ing. Lara", "lara@uce.edu.ec", "abcd", new Date(), "Cálculo");
+        Estudiante ePrueba = new Estudiante("Jeremy", "jeremy@uce.edu.ec","1234", new Date(), Genero.M, "Principiante", progresoInicial);
+        Docente dPrueba = new Docente("Ing. Lara", "lara@uce.edu.ec","abcd", new Date(), Genero.F, "Cálculo");
 
         controlador.registrarUsuario(ePrueba);
         controlador.registrarUsuario(dPrueba);
@@ -52,14 +53,6 @@ public class MenuPrincipal {
     public void registrarUsuario() {
         Consola.tituloRegistro();
 
-        String idT;
-        while (true) {
-            System.out.print("ID Usuario: ");
-            idT = sc.next();
-            if (Validaciones.validarNumero(idT)) break;
-            Consola.error("Use solo números.");
-        }
-        int id = Integer.parseInt(idT);
         sc.nextLine();
 
         String nom;
@@ -88,18 +81,25 @@ public class MenuPrincipal {
 
         Consola.pedirTipoUsuario();
         int tipo = sc.nextInt();
-
         Date fecha = new Date();
+        boolean registrado;
         if (tipo == 1) {
             Progreso nuevoProgreso = new Progreso();
-            Estudiante nuevoEstudiante = new Estudiante(id, nom, mail, pass, fecha, "Principiante", nuevoProgreso);
-            controlador.registrarUsuario(nuevoEstudiante);
-        } else {
-            Docente nuevoDocente = new Docente(id, nom, mail, pass, fecha, "Desarrollo de Software");
-            controlador.registrarUsuario(nuevoDocente);
+            Estudiante nuevoEstudiante = new Estudiante(nom, mail, pass, fecha, Genero.S, "Principiante", nuevoProgreso);
+            registrado=controlador.registrarUsuario(nuevoEstudiante);
+        } else if (tipo == 2) {
+            Docente nuevoDocente = new Docente(nom, mail, pass, fecha, Genero.S ,"Desarrollo de Software");
+            registrado=controlador.registrarUsuario(nuevoDocente);
+        }else{
+            Consola.error("Tipo de usuario no valido");
+            return;
         }
 
-        Consola.info("Usuario registrado correctamente en el sistema.");
+        if(registrado) {
+            Consola.info("Usuario registrado correctamente en el sistema.");
+        }else {
+            Consola.error("No se pudo registrar el usuario debido a que ya existe");
+        }
     }
 
     public void iniciarSesion() {
@@ -130,9 +130,9 @@ public class MenuPrincipal {
             Estudiante estudiante = (Estudiante) usuarioLogueado;
             Consola.exitoLogin("ESTUDIANTE");
 
-            Concepto concepto = new Concepto(1, "Sustitución", "Cambio de variable");
+            Concepto concepto = new Concepto("Sustitución", "Cambio de variable");
             Pista pista = new Pista(1, "Usa la regla de la potencia", 1);
-            Ejercicio ejercicio = new Ejercicio(1, "Integral de 2x", "x^2", "Fácil", new Pista[]{pista});
+            Ejercicio ejercicio = new Ejercicio("Integral de 2x", "x^2", "Fácil", new Pista[]{pista});
 
             MenuUsuario menuUsuario = new MenuUsuario(estudiante, ejercicio);
             menuUsuario.mostrarMenuUsuario();
@@ -141,8 +141,8 @@ public class MenuPrincipal {
             Docente docente = (Docente) usuarioLogueado;
             Consola.exitoLogin("DOCENTE");
 
-            Concepto c1 = new Concepto(1, "Sustitución", "Cambio de variable");
-            Ejercicio e1 = new Ejercicio(1, "Integral de 2x", "x^2", "Fácil", new Pista[0]);
+            Concepto c1 = new Concepto("Sustitución", "Cambio de variable");
+            Ejercicio e1 = new Ejercicio("Integral de 2x", "x^2", "Fácil", new Pista[0]);
             Tema temaSimulado = new Tema(1, "Integrales", "Cálculo integral", new Concepto[]{c1}, new Ejercicio[]{e1});
 
             int opDocente;
@@ -163,8 +163,8 @@ public class MenuPrincipal {
                         sc.nextLine();
                         String nuevoEnunciado = sc.nextLine();
 
-                        int siguienteId = controlador.getListaItemE().size() + 1;
-                        Ejercicio nuevoEj = new Ejercicio(siguienteId, nuevoEnunciado, "0", "Medio", new Pista[0]);
+                        int siguienteId = controlador.getNumItemE()+ 1;
+                        Ejercicio nuevoEj = new Ejercicio(nuevoEnunciado, "0", "Medio", new Pista[0]);
 
                         controlador.agregarEjercicio(nuevoEj);
                         Consola.info("Ejercicio registrado con éxito en el controlador central como ItemEjercicio.");

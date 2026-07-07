@@ -101,7 +101,7 @@ public class MenuUsuario {
                 case 6:
                     System.out.println("\n------------ Progreso ------------- ");
                     if (estudiante.getProgreso() != null) {
-                        System.out.println("Estado actual del progreso: " + estudiante.getProgreso().getEstado());
+                        System.out.println("EstadoTema actual del progreso: " + estudiante.getProgreso().getEstado());
                     } else {
                         System.out.println("No se ha inicializado el progreso de este estudiante.");
                     }

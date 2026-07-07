@@ -66,13 +66,13 @@ public class Tema {
 
     @Override
     public String toString() {
-        return "Tema{" +
-                "idTema=" + idTema +
-                ", nombre='" + nombre + '\'' +
-                ", descripcion='" + descripcion + '\'' +
-                ", cantidadConceptos=" + (conceptos != null ? conceptos.length : 0) +
-                ", cantidadEjercicios=" + (ejercicios != null ? ejercicios.length : 0) +
-                '}';
+        return "Tema( " +
+                "idTema: " + idTema +
+                ", nombre: " + nombre +
+                ", descripcion: " + descripcion +
+                ", cantidadConceptos: " + (conceptos != null ? conceptos.length : 0) +
+                ", cantidadEjercicios: " + (ejercicios != null ? ejercicios.length : 0) +
+                ')';
     }
 }
 

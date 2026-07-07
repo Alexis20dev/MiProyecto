@@ -29,7 +29,7 @@ class ProgresoTest {
         ItemEjercicio[] itemsSimulados = new ItemEjercicio[0];
         Progreso progreso = new Progreso(1, "Completado", fechaPrueba, 500, 120, itemsSimulados);
 
-        assertEquals("Completado", progreso.getEstado(), "El estado obtenido no coincide con el asignado.");
+        assertEquals("Completado", progreso.getEstado(), "El estadoTema obtenido no coincide con el asignado.");
     }
 
     @Test
@@ -37,7 +37,7 @@ class ProgresoTest {
         Progreso progreso = new Progreso();
         progreso.setEstado("Aprobado");
 
-        assertEquals("Aprobado", progreso.getEstado(), "El estado no se modificó correctamente con el setter.");
+        assertEquals("Aprobado", progreso.getEstado(), "El estadoTema no se modificó correctamente con el setter.");
     }
 
     @Test
@@ -125,7 +125,7 @@ class ProgresoTest {
         String resultadoToString = progreso.toString();
 
         assertNotNull(resultadoToString, "El método toString() devolvió null.");
-        assertTrue(resultadoToString.contains("Finalizado"), "El toString() no incluye el estado del progreso.");
+        assertTrue(resultadoToString.contains("Finalizado"), "El toString() no incluye el estadoTema del progreso.");
         assertTrue(resultadoToString.contains("1000"), "El toString() no incluye el puntaje acumulado.");
     }
 }

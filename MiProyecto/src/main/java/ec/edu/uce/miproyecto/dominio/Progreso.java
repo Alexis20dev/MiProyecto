@@ -80,7 +80,7 @@ public class Progreso {
     public String toString() {
         return "Progreso{" +
                 "idProgreso=" + idProgreso +
-                ", estado='" + estado + '\'' +
+                ", estadoTema='" + estado + '\'' +
                 ", fecha=" + fecha +
                 ", puntaje=" + puntaje +
                 ", tiempo=" + tiempo +

@@ -46,7 +46,7 @@ public class Consola {
         System.out.println("• Nivel de aprendizaje: " + nivel);
 
         if (tieneProgreso) {
-            System.out.println("• Estado del módulo: " + estado);
+            System.out.println("• EstadoTema del módulo: " + estado);
             System.out.println("• Puntaje acumulado: " + puntaje + " pts");
             System.out.println("• Tiempo invertido: " + tiempo + " minutos");
         } else {

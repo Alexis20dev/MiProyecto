@@ -2,27 +2,24 @@ package ec.edu.uce.miproyecto.dominio;
 
 public class Concepto {
 
-    private int idConcepto;
+    private final int idConcepto;
+    protected static int idConceptoContador=0;
     private String nombre;
     private String descripcion;
 
     public Concepto() {
-        this.idConcepto = 0;
+        this.idConcepto = idConceptoContador++;
         this.nombre = "Sin nombre";
         this.descripcion = "Sin descripción";
     }
 
-    public Concepto(int idConcepto, String nombre, String descripcion) {
-        this.idConcepto = idConcepto;
+    public Concepto(String nombre, String descripcion) {
+        this.idConcepto = idConceptoContador++;
         this.nombre = nombre;
         this.descripcion = descripcion;
     }
     public int getIdConcepto() {
         return idConcepto;
-    }
-
-    public void setIdConcepto(int idConcepto) {
-        this.idConcepto = idConcepto;
     }
 
     public String getNombre() {

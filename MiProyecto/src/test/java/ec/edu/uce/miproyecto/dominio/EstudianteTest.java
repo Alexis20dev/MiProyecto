@@ -1,5 +1,6 @@
 package ec.edu.uce.miproyecto.dominio;
 
+import ec.edu.uce.miproyecto.enums.Genero;
 import org.junit.jupiter.api.Test;
 import java.util.Date;
 import static org.junit.jupiter.api.Assertions.*;
@@ -9,7 +10,7 @@ class EstudianteTest {
     void verProgreso() {
         Date fechaPrueba = new Date();
         Progreso progresoSimulado = new Progreso();
-        Usuario estudiante = new Estudiante(1, "Jeremy", "jeremy@uce.edu.ec", "1234", fechaPrueba, "Principiante", progresoSimulado);
+        Usuario estudiante = new Estudiante("Jeremy", "jeremy@uce.edu.ec", "1234", fechaPrueba, Genero.M, "Principiante", progresoSimulado);
 
         assertDoesNotThrow(() -> estudiante.verProgreso(), "El método verProgreso() en Estudiante no debería lanzar ninguna excepción.");
     }
@@ -17,7 +18,7 @@ class EstudianteTest {
     void getNivel() {
         Date fechaPrueba = new Date();
         Progreso progresoSimulado = new Progreso();
-        Estudiante estudiante = new Estudiante(1, "Jeremy", "jeremy@uce.edu.ec", "1234", fechaPrueba, "Principiante", progresoSimulado);
+        Estudiante estudiante = new Estudiante("Jeremy","jeremy@uce.edu.ec", "1234", fechaPrueba,Genero.M, "Principiante", progresoSimulado);
 
         assertEquals("Principiante", estudiante.getNivel(), "El nivel obtenido no coincide con el asignado en el constructor.");
     }
@@ -26,7 +27,7 @@ class EstudianteTest {
     void setLevel() {
         Date fechaPrueba = new Date();
         Progreso progresoSimulado = new Progreso();
-        Estudiante estudiante = new Estudiante(1, "Jeremy", "jeremy@uce.edu.ec", "1234", fechaPrueba, "Principiante", progresoSimulado);
+        Estudiante estudiante = new Estudiante("Jeremy", "jeremy@uce.edu.ec", "1234", fechaPrueba,Genero.M, "Principiante", progresoSimulado);
 
         estudiante.setNivel("Avanzado");
 
@@ -37,7 +38,7 @@ class EstudianteTest {
     void getProgreso() {
         Date fechaPrueba = new Date();
         Progreso progresoSimulado = new Progreso();
-        Estudiante estudiante = new Estudiante(1, "Jeremy", "jeremy@uce.edu.ec", "1234", fechaPrueba, "Principiante", progresoSimulado);
+        Estudiante estudiante = new Estudiante("Jeremy", "jeremy@uce.edu.ec", "1234", fechaPrueba,Genero.M, "Principiante", progresoSimulado);
 
         assertNotNull(estudiante.getProgreso(), "El progreso obtenido no debería ser nulo.");
         assertEquals(progresoSimulado, estudiante.getProgreso(), "El objeto Progreso obtenido no coincide con el instanciado.");
@@ -46,7 +47,7 @@ class EstudianteTest {
     @Test
     void setProgreso() {
         Date fechaPrueba = new Date();
-        Estudiante estudiante = new Estudiante(1, "Jeremy", "jeremy@uce.edu.ec", "1234", fechaPrueba, "Principiante", null);
+        Estudiante estudiante = new Estudiante("Jeremy", "jeremy@uce.edu.ec", "1234", fechaPrueba,Genero.M, "Principiante", null);
 
         Progreso nuevoProgreso = new Progreso();
         estudiante.setProgreso(nuevoProgreso);
@@ -59,7 +60,7 @@ class EstudianteTest {
     void testToString() {
         Date fechaPrueba = new Date();
         Progreso progresoSimulado = new Progreso();
-        Estudiante estudiante = new Estudiante(1, "Jeremy", "jeremy@uce.edu.ec", "1234", fechaPrueba, "Experto", progresoSimulado);
+        Estudiante estudiante = new Estudiante("Jeremy", "jeremy@uce.edu.ec", "1234", fechaPrueba,Genero.M, "Experto", progresoSimulado);
 
         String resultadoToString = estudiante.toString();
 

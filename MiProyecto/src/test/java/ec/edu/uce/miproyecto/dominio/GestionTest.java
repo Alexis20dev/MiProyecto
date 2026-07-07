@@ -1,5 +1,6 @@
 package ec.edu.uce.miproyecto.dominio;
 
+import ec.edu.uce.miproyecto.enums.Genero;
 import org.junit.jupiter.api.Test;
 import java.util.Date;
 import static org.junit.jupiter.api.Assertions.*;
@@ -21,7 +22,7 @@ class GestionTest {
     @Test
     void buscarUsuarioPorCorreo() {
         Gestion gestion = new Gestion();
-        Docente docente = new Docente(2, "Ing. Lara", "lara@uce.edu.ec", "abcd", new Date(), "Cálculo");
+        Docente docente = new Docente("Ing. Lara", "lara@uce.edu.ec", "abcd", new Date(), Genero.M, "Cálculo");
         gestion.registrarUsuario(docente);
 
         Usuario encontradoPorEmail = gestion.buscarUsuarioPorCorreo("lara@uce.edu.ec");
@@ -38,17 +39,17 @@ class GestionTest {
     @Test
     void agregarEjercicio() {
         Gestion gestion = new Gestion();
-        Ejercicio ejercicio = new Ejercicio(1, "Integral de 2x", "x^2", "Fácil", new Pista[0]);
+        Ejercicio ejercicio = new Ejercicio("Integral de 2x", "x^2", "Fácil", new Pista[0]);
 
         gestion.agregarEjercicio(ejercicio);
 
         // 🚀 CORREGIDO: Usamos getNumItemE() en lugar de .length
         assertEquals(1, gestion.getNumItemE(), "El ejercicio no se incrementó en el contador.");
 
-        ItemEjercicio itemGuardado = gestion.getListaItemE()[0];
+        ItemEjercicio itemGuardado = gestion.getNumItemE()[0];
         assertNotNull(itemGuardado, "El ítem guardado en la posición 0 es nulo.");
         assertEquals(ejercicio, itemGuardado.getEjercicio(), "El ejercicio dentro del ítem no coincide.");
-        assertEquals("Nuevo", itemGuardado.getEstado(), "El estado inicial debería ser 'Nuevo'.");
+        assertEquals("Nuevo", itemGuardado.getEstado(), "El estadoTema inicial debería ser 'Nuevo'.");
     }
 
     @Test
@@ -64,7 +65,7 @@ class GestionTest {
     void setListaUsuarios() {
         Gestion gestion = new Gestion();
         Usuario[] nuevaLista = new Usuario[100];
-        nuevaLista[0] = new Estudiante(1, "Jeremy", "j@uce.edu.ec", "1", new Date(), "P", new Progreso());
+        nuevaLista[0] = new Estudiante("Jeremy", "j@uce.edu.ec", "1", new Date(),Genero.M, "P", new Progreso());
 
         gestion.setListaUsuarios(nuevaLista);
 
