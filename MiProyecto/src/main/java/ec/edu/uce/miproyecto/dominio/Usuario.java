@@ -1,7 +1,6 @@
 package ec.edu.uce.miproyecto.dominio;
 
 import ec.edu.uce.miproyecto.enums.Genero;
-
 import java.util.Date;
 
 public abstract class Usuario {
@@ -23,6 +22,7 @@ public abstract class Usuario {
         this.genero = Genero.S;
     }
 
+    // Constructor con parámetros
     public Usuario(String nombre, String email, String contrasena, Date fechaRegistro, Genero genero) {
         this.idUsuario = contadorId++;
         this.nombre = nombre;
@@ -33,7 +33,7 @@ public abstract class Usuario {
     }
 
     public Usuario(Usuario usuario) {
-        this.idUsuario= usuario.idUsuario;
+        this.idUsuario = usuario.idUsuario;
         this.nombre = usuario.nombre;
         this.email = usuario.email;
         this.contrasena = usuario.contrasena;
@@ -52,13 +52,14 @@ public abstract class Usuario {
 
     public abstract void verProgreso();
 
-    public int  getIdUsuario() {
+    public int getIdUsuario() {
         return idUsuario;
     }
+
     public String getNombre() { return nombre; }
     public void setNombre(String nombre) {
         if(nombre != null && !nombre.equals("")){
-        this.nombre = nombre;
+            this.nombre = nombre;
         }
     }
 
@@ -68,31 +69,19 @@ public abstract class Usuario {
     public String getContrasena() { return contrasena; }
     public void setContrasena(String contrasena) { this.contrasena = contrasena; }
 
+
     public Date getFechaRegistro() { return fechaRegistro; }
     public void setFechaRegistro(Date fechaRegistro) { this.fechaRegistro = fechaRegistro; }
 
-
-//    @Override
-//    public boolean equals(Object o) {
-//        boolean resp=false;
-//        if (o instanceof Usuario) {
-//            Usuario u= ((Usuario) o);
-//            if(this.nombre.equals(u.getNombre()))
-//                return true;
-//        }
-//        return resp;
-//    }
-//
+    public Genero getGenero() { return genero; }
+    public void setGenero(Genero genero) { this.genero = genero; }
     @Override
     public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (!(o instanceof Usuario)) {
-            return false;
-        }
+        if (this == o) return true;
+        if (!(o instanceof Usuario)) return false;
+        //Casting
         Usuario otroUsuario = (Usuario) o;
-        return this.idUsuario == otroUsuario.idUsuario;
+        return this.email != null && this.email.equalsIgnoreCase(otroUsuario.email);
     }
 
     @Override

@@ -27,17 +27,16 @@ public class MenuUsuario {
             System.out.println("5) Solicitar pistas");
             System.out.println("6) Ver progreso");
             System.out.println("7) Cerrar sesión");
+            System.out.println("8) Modificar perfil"); // 💡 Añadido visualmente al menú
 
-            // 1. VALIDACIÓN DEL MENÚ
             System.out.print("Seleccione una opción: ");
             entradaOpcion = sc.nextLine().trim();
 
             if (!Validaciones.validarOpcionMenu(entradaOpcion)) {
-                System.out.println("⚠️ Error: Debe ingresar un número del 1 al 7.");
-                continue; // Vuelve al inicio del do-while sin ejecutar el switch
+                System.out.println("⚠️ Error: Debe ingresar un número del 1 al 8.");
+                continue;
             }
 
-            // Si pasó la validación, lo convertimos a int (es 100% seguro hacerlo aquí)
             opcion = Integer.parseInt(entradaOpcion);
 
             switch (opcion) {
@@ -59,28 +58,65 @@ public class MenuUsuario {
                     System.out.println("\n--------- Ejercicio -------------");
                     System.out.println("Enunciado: " + ejercicio.getEnunciado());
 
-                    String respuestaUsuario;
-                    boolean respuestaValida = false;
+                    boolean resolviendo = true;
+                    int pistaActual = 0;
 
-                    // VALIDACIÓN
-                    do {
-                        System.out.print("Ingrese Respuesta: ");
-                        respuestaUsuario = sc.nextLine().trim();
+                    while (resolviendo) {
+                        String respuestaUsuario;
+                        boolean respuestaValida = false;
 
-                        if (Validaciones.validarRespuesta(respuestaUsuario)) {
-                            respuestaValida = true;
+                        do {
+                            System.out.print("\nIngrese Respuesta: ");
+                            respuestaUsuario = sc.nextLine().trim();
+
+                            if (Validaciones.validarRespuesta(respuestaUsuario)) {
+                                respuestaValida = true;
+                            } else {
+                                System.out.println("⚠️ Error: La respuesta no puede estar vacía.");
+                            }
+                        } while (!respuestaValida);
+
+                        if (ejercicio.getRespuesta().equalsIgnoreCase(respuestaUsuario)) {
+                            System.out.println("¡Resultado Correcto! ");
+                            if (estudiante.getProgreso() != null) {
+                                System.out.println("¡Buen trabajo! Ejercicio completado.");
+                            }
+                            resolviendo = false;
                         } else {
-                            System.out.println("⚠️ Error: La respuesta no puede estar vacía.");
-                        }
-                    } while (!respuestaValida);
+                            System.out.println("Resultado Incorrecto. ¡Sigue intentando!");
 
-                    if (ejercicio.getRespuesta().equalsIgnoreCase(respuestaUsuario)) {
-                        System.out.println("¡Resultado Correcto! 🎉");
-                        if (estudiante.getProgreso() != null) {
-                            System.out.println("¡Buen trabajo! Ejercicio completado.");
+                            boolean opcionAyudaValida = false;
+                            while (!opcionAyudaValida) {
+                                System.out.println("\n¿Qué deseas hacer?");
+                                System.out.println("1) Volver a intentar el ejercicio");
+                                System.out.println("2) Solicitar una pista");
+                                System.out.println("3) Regresar al menú de usuario");
+                                System.out.print("Seleccione una opción: ");
+                                String subOpcion = sc.nextLine().trim();
+
+                                switch (subOpcion) {
+                                    case "1":
+                                        opcionAyudaValida = true;
+                                        break;
+                                    case "2":
+                                        System.out.println("\n----------- Pistas ---------------");
+                                        if (ejercicio.getPistas() != null && ejercicio.getPistas().size() > pistaActual) {
+                                            System.out.println("💡 Pista disponible: " + ejercicio.getPistas().get(pistaActual).getDescripcion());
+                                            pistaActual++;
+                                        } else {
+                                            System.out.println("📢 No hay más pistas disponibles para este ejercicio.");
+                                        }
+                                        opcionAyudaValida = true;
+                                        break;
+                                    case "3":
+                                        opcionAyudaValida = true;
+                                        resolviendo = false;
+                                        break;
+                                    default:
+                                        System.out.println("⚠️ Opción inválida. Elija 1, 2 o 3.");
+                                }
+                            }
                         }
-                    } else {
-                        System.out.println("❌ Resultado Incorrecto. ¡Sigue intentando!");
                     }
                     break;
 
@@ -89,19 +125,20 @@ public class MenuUsuario {
                     System.out.println("Concepto Clave: Integración por partes.");
                     System.out.println("Descripción: Método que permite calcular la integral de un producto de funciones.");
                     break;
+
                 case 5:
                     System.out.println("\n----------- Pistas ---------------");
-                    if (ejercicio.getPistas() != null && ejercicio.getPistas().length > 0) {
-                        System.out.println("💡 Pista disponible: " + ejercicio.getPistas()[0].getDescripcion());
+                    if (ejercicio.getPistas() != null && !ejercicio.getPistas().isEmpty()) {
+                        System.out.println("💡 Pista disponible: " + ejercicio.getPistas().get(0).getDescripcion());
                     } else {
-                        System.out.println("📢 No hay pistas asignadas a este ejercicio todavía.");
+                        System.out.println(" No hay pistas asignadas a este ejercicio todavía.");
                     }
                     break;
 
                 case 6:
                     System.out.println("\n------------ Progreso ------------- ");
                     if (estudiante.getProgreso() != null) {
-                        System.out.println("EstadoTema actual del progreso: " + estudiante.getProgreso().getEstado());
+                        System.out.println("Estado actual del progreso: " + estudiante.getProgreso().getEstado());
                     } else {
                         System.out.println("No se ha inicializado el progreso de este estudiante.");
                     }
@@ -109,6 +146,23 @@ public class MenuUsuario {
 
                 case 7:
                     System.out.println("\nSesión Finalizada. ¡Regresa pronto!");
+                    break;
+
+                case 8:
+                    System.out.println("\n----------- MODIFICAR PERFIL -----------");
+                    System.out.print("Ingrese su nuevo nombre: ");
+                    String nuevoNombre = sc.nextLine().trim();
+
+                    System.out.print("Ingrese su nueva contraseña: ");
+                    String nuevaContra = sc.nextLine().trim();
+
+                    if (!nuevoNombre.isEmpty() && !nuevaContra.isEmpty()) {
+                        estudiante.setNombre(nuevoNombre);
+                        estudiante.setContrasena(nuevaContra);
+                        System.out.println(" [Sistema]: ¡Tus datos han sido actualizados con éxito!");
+                    } else {
+                        System.out.println(" Error: Los campos no pueden estar vacíos.");
+                    }
                     break;
             }
         } while (opcion != 7);

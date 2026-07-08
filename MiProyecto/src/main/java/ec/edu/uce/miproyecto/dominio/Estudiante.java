@@ -12,7 +12,7 @@ public final class Estudiante extends Usuario {
 
     public Estudiante() {
         super();
-        this.nivel = "Principiante";
+        this.nivel = "Sin nivel";
         this.progreso = new Progreso();
     }
 
@@ -50,6 +50,19 @@ public final class Estudiante extends Usuario {
 
     public void setProgreso(Progreso progreso) {
         this.progreso = progreso;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o){
+            return true;
+        }
+        if (!(o instanceof  Estudiante)){
+            return false;
+        }
+        //Casting
+        Estudiante estudiante = (Estudiante) o;
+        return this.getIdUsuario() == estudiante.getIdUsuario();
     }
 
     @Override

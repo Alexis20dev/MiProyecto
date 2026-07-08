@@ -1,27 +1,24 @@
 package ec.edu.uce.miproyecto.interfaz;
 
+import ec.edu.uce.miproyecto.dao.EjercicioDAO;
+import ec.edu.uce.miproyecto.dao.EjercicioDAOMemoriaImpl;
+import ec.edu.uce.miproyecto.dao.UsuarioDAO;
+import ec.edu.uce.miproyecto.dao.UsuarioDAOMemoriaImpl;
 import ec.edu.uce.miproyecto.dominio.*;
 import ec.edu.uce.miproyecto.enums.Genero;
 import ec.edu.uce.miproyecto.util.Validaciones;
-import ec.edu.uce.miproyecto.util.Consola; // 🚀 Importamos tu nueva clase de textos
+import ec.edu.uce.miproyecto.util.Consola;
 import java.util.Scanner;
 import java.util.Date;
 
 public class MenuPrincipal {
     private final Scanner sc = new Scanner(System.in);
-    private final Gestion controlador = new Gestion();
-
+    private UsuarioDAO usuarioDao=new UsuarioDAOMemoriaImpl();
     public MenuPrincipal() {
-        Progreso progresoInicial = new Progreso();
-        Estudiante ePrueba = new Estudiante("Jeremy", "jeremy@uce.edu.ec","1234", new Date(), Genero.M, "Principiante", progresoInicial);
-        Docente dPrueba = new Docente("Ing. Lara", "lara@uce.edu.ec","abcd", new Date(), Genero.F, "Cálculo");
-
-        controlador.registrarUsuario(ePrueba);
-        controlador.registrarUsuario(dPrueba);
     }
 
     public void mostrarMenuPrincipal() {
-        String opcionInput; // Cambiamos a String para poder recibir CUALQUIER entrada sin que se caiga
+        String opcionInput;
         int opcion = 0;
 
         do {
@@ -50,6 +47,7 @@ public class MenuPrincipal {
             }
         } while (opcion != 3);
     }
+
     public void registrarUsuario() {
         Consola.tituloRegistro();
 
@@ -83,56 +81,51 @@ public class MenuPrincipal {
         int tipo = sc.nextInt();
         Date fecha = new Date();
         boolean registrado;
+
         if (tipo == 1) {
             Progreso nuevoProgreso = new Progreso();
             Estudiante nuevoEstudiante = new Estudiante(nom, mail, pass, fecha, Genero.S, "Principiante", nuevoProgreso);
-            registrado=controlador.registrarUsuario(nuevoEstudiante);
+            registrado = usuarioDao.registrar(nuevoEstudiante);
         } else if (tipo == 2) {
-            Docente nuevoDocente = new Docente(nom, mail, pass, fecha, Genero.S ,"Desarrollo de Software");
-            registrado=controlador.registrarUsuario(nuevoDocente);
-        }else{
-            Consola.error("Tipo de usuario no valido");
+            Docente nuevoDocente = new Docente(nom, mail, pass, fecha, Genero.S, "Desarrollo de Software");
+            registrado = usuarioDao.registrar(nuevoDocente);
+        } else {
+            Consola.error("Tipo de usuario no válido");
             return;
         }
 
-        if(registrado) {
+        if (registrado) {
             Consola.info("Usuario registrado correctamente en el sistema.");
-        }else {
-            Consola.error("No se pudo registrar el usuario debido a que ya existe");
+        } else {
+            Consola.error("No se pudo registrar el usuario debido a que ya existe.");
         }
     }
 
     public void iniciarSesion() {
-        sc.nextLine(); // Limpiar buffer
+        sc.nextLine();
         System.out.print("Usuario o Correo Electrónico: ");
         String credencialInput = sc.nextLine();
         System.out.print("Contraseña: ");
         String passwordInput = sc.nextLine();
 
-        // 1. Buscamos primero si el usuario existe en el sistema
-        Usuario usuarioLogueado = controlador.buscarUsuarioPorCorreo(credencialInput);
+        Usuario usuarioLogueado = usuarioDao.buscar(credencialInput);
 
         if (usuarioLogueado == null) {
-            // ❌ CASO A: El correo no está registrado
             Consola.error("El correo electrónico '" + credencialInput + "' no está registrado en el sistema.");
-            return; // Cortamos la ejecución aquí para que intente de nuevo
+            return;
         }
 
-        // 2. Si el usuario existe, validamos si la contraseña coincide
         if (!usuarioLogueado.getContrasena().equals(passwordInput)) {
-            // ❌ CASO B: El usuario existe, pero la contraseña está mal
             Consola.error("Contraseña incorrecta para el usuario: " + usuarioLogueado.getNombre() + ". Intente de nuevo.");
-            return; // Cortamos la ejecución
+            return;
         }
 
-        // 3. Si pasó los dos filtros anteriores, las credenciales son correctas
         if (usuarioLogueado instanceof Estudiante) {
             Estudiante estudiante = (Estudiante) usuarioLogueado;
             Consola.exitoLogin("ESTUDIANTE");
 
-            Concepto concepto = new Concepto("Sustitución", "Cambio de variable");
-            Pista pista = new Pista(1, "Usa la regla de la potencia", 1);
-            Ejercicio ejercicio = new Ejercicio("Integral de 2x", "x^2", "Fácil", new Pista[]{pista});
+            Pista pista = new Pista("Usa la regla de la potencia", 1);
+            Ejercicio ejercicio = new Ejercicio("Integral de 2x", "x^2", "Fácil");
 
             MenuUsuario menuUsuario = new MenuUsuario(estudiante, ejercicio);
             menuUsuario.mostrarMenuUsuario();
@@ -142,8 +135,9 @@ public class MenuPrincipal {
             Consola.exitoLogin("DOCENTE");
 
             Concepto c1 = new Concepto("Sustitución", "Cambio de variable");
-            Ejercicio e1 = new Ejercicio("Integral de 2x", "x^2", "Fácil", new Pista[0]);
-            Tema temaSimulado = new Tema(1, "Integrales", "Cálculo integral", new Concepto[]{c1}, new Ejercicio[]{e1});
+            Ejercicio e1 = new Ejercicio("Integral de 2x", "x^2", "Fácil");
+
+            Tema temaSimulado = new Tema("Integrales", "Cálculo integral", new Concepto[]{c1}, new Ejercicio[]{e1});
 
             int opDocente;
             do {
@@ -159,14 +153,16 @@ public class MenuPrincipal {
                         }
                         break;
                     case 2:
+                        EjercicioDAO ejercicioDao = new EjercicioDAOMemoriaImpl();
                         System.out.print("\nIngrese el enunciado del nuevo ejercicio: ");
                         sc.nextLine();
                         String nuevoEnunciado = sc.nextLine();
 
-                        int siguienteId = controlador.getNumItemE()+ 1;
-                        Ejercicio nuevoEj = new Ejercicio(nuevoEnunciado, "0", "Medio", new Pista[0]);
+                        Ejercicio nuevoEj = new Ejercicio(nuevoEnunciado, e1.getRespuesta(), "Medio");
 
-                        controlador.agregarEjercicio(nuevoEj);
+                        if (usuarioDao instanceof UsuarioDAOMemoriaImpl) {
+                            ((EjercicioDAOMemoriaImpl) ejercicioDao).nuevo(nuevoEj);
+                        }
                         Consola.info("Ejercicio registrado con éxito en el controlador central como ItemEjercicio.");
                         break;
                     case 3:

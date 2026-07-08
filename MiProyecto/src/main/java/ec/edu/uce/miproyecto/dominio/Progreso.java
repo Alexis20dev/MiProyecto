@@ -77,6 +77,19 @@ public class Progreso {
     }
 
     @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (!(obj instanceof Progreso)) {
+            return false;
+        }
+        //Casting
+        Progreso progreso = (Progreso) obj;
+        return this.idProgreso == progreso.idProgreso;
+    }
+
+    @Override
     public String toString() {
         return "Progreso{" +
                 "idProgreso=" + idProgreso +
