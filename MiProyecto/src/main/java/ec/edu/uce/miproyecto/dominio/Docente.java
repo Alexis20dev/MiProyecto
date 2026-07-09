@@ -51,6 +51,19 @@ public final class Docente extends Usuario {
 //    }
 
     @Override
+    public boolean equals(Object o) {
+        if ((this == o)){
+            return true;
+        }
+        if (!(o instanceof Docente)){
+            return false;
+        }
+        //Casting
+        Docente docente = (Docente) o;
+        return this.getIdUsuario() == docente.getIdUsuario();
+    }
+
+    @Override
     public String toString() {
         return "Docente{" +
                 super.toString() +

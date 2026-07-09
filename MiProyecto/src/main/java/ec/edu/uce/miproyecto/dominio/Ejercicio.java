@@ -1,8 +1,6 @@
 package ec.edu.uce.miproyecto.dominio;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
 public class Ejercicio {
 
@@ -11,29 +9,24 @@ public class Ejercicio {
     private String enunciado;
     private String respuesta;
     private String dificultad;
-
-    private List<ItemEjercicio> items;
-    private List<Pista> pistas;
+    private Pista[] pistas;
 
     public Ejercicio() {
         this.idEjercicio = idEjercicioContador++;
         this.enunciado = "Sin enunciado";
         this.respuesta = "Sin respuesta";
-        this.dificultad = "sin dificultad";
+        this.dificultad = "Baja";
+        this.pistas = new Pista[3];
     }
 
-    public Ejercicio(String enunciado, String respuesta, String dificultad) {
+    public Ejercicio(String enunciado, String respuesta, String dificultad, Pista[] pistas) {
         this.idEjercicio = idEjercicioContador++;
         this.enunciado = enunciado;
         this.respuesta = respuesta;
         this.dificultad = dificultad;
-        items = new ArrayList<ItemEjercicio>(20);
-        pistas = new ArrayList<Pista>(5);
+        this.pistas = pistas;
     }
 
-    public void agregarPista(Pista pista){
-        pistas.add(pista);
-    }
     public int getIdEjercicio() {
         return idEjercicio;
     }
@@ -55,26 +48,12 @@ public class Ejercicio {
     public void setDificultad(String dificultad) {
         this.dificultad = dificultad;
     }
-    public List<Pista> getPistas() {
+    public Pista[] getPistas() {
         return pistas;
     }
-    public List<ItemEjercicio> getItems() {
-        return items;
+    public void setPistas(Pista[] pistas) {
+        this.pistas = pistas;
     }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj){
-            return true;
-        }
-        if (!(obj instanceof  Ejercicio)){
-            return false;
-        }
-        //Casting
-        Ejercicio ejercicio = (Ejercicio) obj;
-        return this.idEjercicio == ejercicio.idEjercicio;
-    }
-
 
     @Override
     public String toString() {
@@ -82,7 +61,7 @@ public class Ejercicio {
                 "idEjercicio=" + idEjercicio +
                 ", enunciado='" + enunciado + '\'' +
                 ", dificultad='" + dificultad + '\'' +
-                ", cantidadPistas=" + (pistas != null ? pistas.size(): 0) + // Muestra cuántas pistas tiene asignadas
+                ", cantidadPistas=" + (pistas != null ? pistas.length : 0) + // Muestra cuántas pistas tiene asignadas
                 '}';
     }
 }
