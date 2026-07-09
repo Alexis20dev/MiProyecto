@@ -4,71 +4,43 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Validaciones {
+
     public static boolean validarNumero(String texto) {
         Pattern pattern = Pattern.compile("\\d+");
         Matcher matcher = pattern.matcher(texto);
-
-        if (matcher.matches()) {
-            return true;
-        } else {
-            return false;
-        }
+        return matcher.matches();
     }
+
     public static boolean validarNombre(String texto) {
         Pattern pattern = Pattern.compile("[a-zA-ZáéíóúÁÉÍÓÚ ]+");
         Matcher matcher = pattern.matcher(texto);
-
-        if (matcher.matches()) {
-            return true;
-        } else {
-            return false;
-        }
+        return matcher.matches();
     }
 
-    //Validar para correo
+    // Validar para correo
     public static boolean validarEmail(String texto) {
         Pattern pattern = Pattern.compile("^[A-Za-z0-9+_.-]+@(.+)$");
         Matcher matcher = pattern.matcher(texto);
-
-        if (matcher.matches()) {
-            return true;
-        } else {
-            return false;
-        }
+        return matcher.matches();
     }
 
-    //Validar contraseñas
+    // Validar contraseñas
     public static boolean validarContrasena(String texto) {
         Pattern pattern = Pattern.compile(".{4,}");
         Matcher matcher = pattern.matcher(texto);
-
-        if (matcher.matches()) {
-            return true;
-        } else {
-            return false;
-        }
+        return matcher.matches();
     }
-    //------------------------------------------------------------------------------------------------------
-    // Validaciones del MenuUsuario
+
     public static boolean validarOpcionMenu(String texto) {
-        Pattern pattern = Pattern.compile("[1-7]");
+        Pattern pattern = Pattern.compile("[1-8]");
         Matcher matcher = pattern.matcher(texto);
-
-        if (matcher.matches()) {
-            return true;
-        } else {
-            return false;
-        }
+        return matcher.matches();
     }
 
-    // Validacion para el ejercicio no este vacio, ni tenga espacios en blaco
     public static boolean validarRespuesta(String texto) {
-        Pattern pattern = Pattern.compile(".\\S."); // La \S ayuda a evitar que el usuario unicamente ponga espacios en blanco
-        Matcher matcher = pattern.matcher((texto));
-        if (matcher.matches()) {
-            return true;
-        } else {
-            return false;
-        }
+        Pattern pattern = Pattern.compile("^.*\\S.*$");
+        Matcher matcher = pattern.matcher(texto);
+        return matcher.matches();
     }
+
 }

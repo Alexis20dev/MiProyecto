@@ -1,36 +1,38 @@
 package ec.edu.uce.miproyecto.dominio;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Tema {
 
-    private int idTema;
+    private final int idTema;
+    private static int idTemaContador = 1; // Empieza en 1 (o en 0, según prefieras)
+
     private String nombre;
     private String descripcion;
-    private Concepto[] conceptos;
-    private Ejercicio[] ejercicios;
+    private List<Concepto> conceptos;
+    private List<Ejercicio> ejercicios;
 
     public Tema() {
-        this.idTema = 0;
+        this.idTema = idTemaContador++; // Asigna el ID automáticamente e incrementa
         this.nombre = "Sin nombre";
         this.descripcion = "Sin descripción";
-        this.conceptos = new Concepto[5];
-        this.ejercicios = new Ejercicio[5];
     }
 
-    public Tema(int idTema, String nombre, String descripcion, Concepto[] conceptos, Ejercicio[] ejercicios) {
-        this.idTema = idTema;
+    public Tema(String nombre, String descripcion) {
+        this.idTema = idTemaContador++; // Asigna el ID automáticamente de forma secuencial
         this.nombre = nombre;
         this.descripcion = descripcion;
-        this.conceptos = conceptos;
-        this.ejercicios = ejercicios;
+        conceptos = new ArrayList<Concepto>(3);
+        ejercicios = new ArrayList<Ejercicio>(3);
     }
+
 
     public int getIdTema() {
         return idTema;
     }
 
-    public void setIdTema(int idTema) {
-        this.idTema = idTema;
-    }
+    // ⚠️ ELIMINADO: Se quita el método setIdTema(int idTema) porque el atributo ahora es 'final'.
 
     public String getNombre() {
         return nombre;
@@ -48,20 +50,24 @@ public class Tema {
         this.descripcion = descripcion;
     }
 
-    public Concepto[] getConceptos() {
+    public List<Concepto> getConceptos() {
         return conceptos;
     }
-
-    public void setConceptos(Concepto[] conceptos) {
-        this.conceptos = conceptos;
-    }
-
-    public Ejercicio[] getEjercicios() {
+    public List<Ejercicio> getEjercicios() {
         return ejercicios;
     }
 
-    public void setEjercicios(Ejercicio[] ejercicios) {
-        this.ejercicios = ejercicios;
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj){
+            return true;
+        }
+        if (!(obj instanceof Tema)){
+            return false;
+        }
+        //Casting
+        Tema tema = (Tema) obj;
+        return this.idTema == tema.idTema;
     }
 
     @Override
@@ -70,9 +76,8 @@ public class Tema {
                 "idTema: " + idTema +
                 ", nombre: " + nombre +
                 ", descripcion: " + descripcion +
-                ", cantidadConceptos: " + (conceptos != null ? conceptos.length : 0) +
-                ", cantidadEjercicios: " + (ejercicios != null ? ejercicios.length : 0) +
+                ", cantidadConceptos: " + (conceptos != null ? conceptos.size() : 0) +
+                ", cantidadEjercicios: " + (ejercicios != null ? ejercicios.size() : 0) +
                 ')';
     }
 }
-

@@ -34,6 +34,23 @@ public class ItemEjercicio {
     }
 
     @Override
+    public boolean equals(Object obj) {
+        if (this ==obj) {
+            return true;
+        }
+        if ((!(obj instanceof ItemEjercicio))){
+            return false;
+        }
+        //Casting
+        ItemEjercicio item = (ItemEjercicio) obj;
+        if (this.ejercicio == null || item.ejercicio == null){
+            return false;
+        }
+        return this.ejercicio.equals(item.ejercicio);
+    }
+
+
+    @Override
     public String toString() {
         return "ItemEjercicio{" +
                 "ejercicio=" + (ejercicio != null ? ejercicio.getEnunciado() : "Ninguno") +
