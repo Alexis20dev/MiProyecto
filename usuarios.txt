@@ -4,3 +4,6 @@ Docente,Sandier,sfmerizalde@uce.edu.ec,cuervo
 Estudiante,Sandier,sfmerzalde@uce.edu.ec,cuervo
 Estudiante,Sandier,sfmerizalde@uce.edu.ec,cuervo
 Estudiante,Fernando,fernando@uce.edu.ec,cuervo
+Estudiante,jeremy,jeremy@uce.edu.ec,1111
+Docente,ximena,ximena@uce.edu.ec,aaaa
+Estudiante,Roberth,rob@uce.edu.ec,1234

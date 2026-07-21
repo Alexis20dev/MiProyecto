@@ -1,76 +1,173 @@
 package ec.edu.uce.miproyecto.Gui;
 
-import ec.edu.uce.miproyecto.dominio.Estudiante;
-import ec.edu.uce.miproyecto.dominio.Ejercicio;
-import ec.edu.uce.miproyecto.dao.InterfaceDAO;
-import ec.edu.uce.miproyecto.dao.UsuarioDAOFabrica;
-import ec.edu.uce.miproyecto.dao.DAOException;
-import javax.swing.JOptionPane;
+import ec.edu.uce.miproyecto.dominio.*;
+import ec.edu.uce.miproyecto.dao.*;
+
+import javax.swing.*;
+import java.awt.*;
+import java.util.List;
 
 public class EstudianteFrame extends javax.swing.JFrame {
 
     private final InterfaceDAO usuarioDao = new UsuarioDAOFabrica().crearUsuarioDAO();
+    private final TemaDAO temaDao = new TemaDAOMemoriaImpl(); // Mismo DAO compartido
     private Estudiante estudianteLogueado;
     private Ejercicio ejercicioActual;
     private int contadorPistas = 0;
 
-
     public EstudianteFrame(Estudiante estudiante, Ejercicio ejercicio) {
-        this.estudianteLogueado = estudiante;
+        if (estudiante != null) {
+            this.estudianteLogueado = estudiante;
+        } else {
+            inicializarEstudianteDefecto();
+        }
+
         this.ejercicioActual = ejercicio;
 
         initComponents();
 
         setTitle("MathFlow - Estudiante: " + estudianteLogueado.getNombre());
         jLabel1.setText("Bienvenido, " + estudianteLogueado.getNombre());
-        setLocationRelativeTo(null); // Centra la ventana
+        setLocationRelativeTo(null);
 
         conectarEventos();
+
+        // Si no se pasó un ejercicio por parámetro, intentamos cargar el primero creado por el docente
+        if (this.ejercicioActual == null) {
+            cargarPrimerEjercicioDisponible();
+        }
     }
 
     public EstudianteFrame() {
-        initComponents();
+        this(null, null);
+    }
+
+    private void inicializarEstudianteDefecto() {
+        this.estudianteLogueado = new Estudiante();
+        this.estudianteLogueado.setNombre("Estudiante");
+        this.estudianteLogueado.setContrasena("1234");
+        this.estudianteLogueado.setNivel("Principiante");
+    }
+
+    /**
+     * Carga dinámicamente el primer ejercicio registrado por el docente en el TemaDAO
+     */
+    private void cargarPrimerEjercicioDisponible() {
+        try {
+            List<Tema> temas = temaDao.listar();
+            for (Tema t : temas) {
+                if (t.getEjercicios() != null && !t.getEjercicios().isEmpty()) {
+                    this.ejercicioActual = t.getEjercicios().get(0);
+                    break;
+                }
+            }
+        } catch (Exception ex) {
+            System.err.println("Error al cargar ejercicios del DAO: " + ex.getMessage());
+        }
     }
 
     private void conectarEventos() {
 
+        // 1. Ver Ejercicio o Seleccionar uno de los creados por el Docente
         jButton1.addActionListener(e -> {
-            if (ejercicioActual != null) {
-                String msg = "Dificultad: " + ejercicioActual.getDificultad() + "\n\n"
-                        + "Enunciado:\n" + ejercicioActual.getEnunciado();
-                JOptionPane.showMessageDialog(this, msg, "Ejercicio del Módulo", JOptionPane.INFORMATION_MESSAGE);
-            } else {
-                JOptionPane.showMessageDialog(this, "No hay un ejercicio asignado actualmente.", "Aviso", JOptionPane.WARNING_MESSAGE);
+            try {
+                List<Tema> temas = temaDao.listar();
+                if (temas.isEmpty()) {
+                    JOptionPane.showMessageDialog(this, "El docente aún no ha registrado temas.", "Aviso", JOptionPane.INFORMATION_MESSAGE);
+                    return;
+                }
+
+                // Permitir al estudiante elegir un tema de los existentes
+                Tema temaSel = (Tema) JOptionPane.showInputDialog(
+                        this,
+                        "Selecciona un Tema para practicar:",
+                        "Temas Disponibles",
+                        JOptionPane.QUESTION_MESSAGE,
+                        null,
+                        temas.toArray(),
+                        temas.get(0)
+                );
+
+                if (temaSel != null && temaSel.getEjercicios() != null && !temaSel.getEjercicios().isEmpty()) {
+                    // Seleccionar ejercicio de ese tema
+                    Ejercicio ejSel = (Ejercicio) JOptionPane.showInputDialog(
+                            this,
+                            "Selecciona un Ejercicio:",
+                            "Ejercicios de " + temaSel.getNombre(),
+                            JOptionPane.QUESTION_MESSAGE,
+                            null,
+                            temaSel.getEjercicios().toArray(),
+                            temaSel.getEjercicios().get(0)
+                    );
+
+                    if (ejSel != null) {
+                        this.ejercicioActual = ejSel;
+                        this.contadorPistas = 0; // Reiniciar contador de pistas para el nuevo ejercicio
+                        String msg = "Tema: " + temaSel.getNombre() + "\n"
+                                + "Dificultad: " + ejercicioActual.getDificultad() + "\n\n"
+                                + "Enunciado:\n" + ejercicioActual.getEnunciado();
+                        JOptionPane.showMessageDialog(this, msg, "Ejercicio Carga Directa", JOptionPane.INFORMATION_MESSAGE);
+                    }
+                } else if (temaSel != null) {
+                    JOptionPane.showMessageDialog(this, "Este tema no tiene ejercicios registrados por el docente.", "Aviso", JOptionPane.WARNING_MESSAGE);
+                }
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(this, "Error al obtener ejercicios: " + ex.getMessage());
             }
         });
 
+        // 2. Ver Progreso
         jButton2.addActionListener(e -> {
             String reporte = "=== REPORTE DE RENDIMIENTO ===\n\n"
                     + "Estudiante: " + estudianteLogueado.getNombre() + "\n"
-                    + "Nivel Actual: " + estudianteLogueado.getNivel() + "\n"
+                    + "Nivel Actual: " + (estudianteLogueado.getNivel() != null ? estudianteLogueado.getNivel() : "General") + "\n"
                     + "Pistas solicitadas en esta sesión: " + contadorPistas + "\n"
                     + "Estado del Tema: " + (estudianteLogueado.getProgreso() != null ? estudianteLogueado.getProgreso().getEstado() : "Activo");
             JOptionPane.showMessageDialog(this, reporte, "Mi Progreso", JOptionPane.INFORMATION_MESSAGE);
         });
 
+        // 3. Ver Conceptos creados por el Docente
         jButton4.addActionListener(e -> {
-            String teoria = "=== CONCEPTO: INTEGRACIÓN DIRECTA ===\n\n"
-                    + "Es el proceso que permite hallar la primitiva de una función de forma inmediata.\n\n"
-                    + "Fórmulas Útiles:\n"
-                    + "• ∫ x^n dx = (x^(n+1)) / (n+1) + C\n"
-                    + "• ∫ e^x dx = e^x + C\n"
-                    + "• ∫ 1/x dx = ln|x| + C";
-            JOptionPane.showMessageDialog(this, teoria, "Contenido Teórico", JOptionPane.INFORMATION_MESSAGE);
+            try {
+                List<Tema> temas = temaDao.listar();
+                StringBuilder sb = new StringBuilder("=== CONCEPTOS REGISTRADOS POR EL DOCENTE ===\n\n");
+                boolean hayConceptos = false;
+
+                for (Tema t : temas) {
+                    if (t.getConceptos() != null && !t.getConceptos().isEmpty()) {
+                        sb.append("📌 Tema: ").append(t.getNombre()).append("\n");
+                        for (Concepto c : t.getConceptos()) {
+                            sb.append("  • ").append(c.getNombre()).append(": ").append(c.getDescripcion()).append("\n");
+                            hayConceptos = true;
+                        }
+                        sb.append("\n");
+                    }
+                }
+
+                if (!hayConceptos) {
+                    sb.append("Aún no hay conceptos teóricos cargados por el docente.");
+                }
+
+                JOptionPane.showMessageDialog(this, sb.toString(), "Contenido Teórico", JOptionPane.INFORMATION_MESSAGE);
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(this, "Error al cargar conceptos: " + ex.getMessage());
+            }
         });
 
+        // 4. Enviar Respuesta
         jButton5.addActionListener(e -> {
+            if (ejercicioActual == null) {
+                JOptionPane.showMessageDialog(this, "Selecciona primero un ejercicio haciendo clic en 'Ver Ejercicio'.", "Sin Ejercicio", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+
             String respuesta = jTextField1.getText().trim();
             if (respuesta.isEmpty()) {
                 JOptionPane.showMessageDialog(this, "Por favor, ingresa una respuesta antes de evaluar.", "Campo Vacío", JOptionPane.WARNING_MESSAGE);
                 return;
             }
 
-            if (ejercicioActual.getRespuesta().equalsIgnoreCase(respuesta)) {
+            if (ejercicioActual.getRespuesta() != null && ejercicioActual.getRespuesta().equalsIgnoreCase(respuesta)) {
                 JOptionPane.showMessageDialog(this, "¡Excelente Trabajo! La respuesta es correcta. 🎉", "¡Correcto!", JOptionPane.INFORMATION_MESSAGE);
                 jTextField1.setText("");
                 contadorPistas = 0;
@@ -79,20 +176,28 @@ public class EstudianteFrame extends javax.swing.JFrame {
             }
         });
 
+        // 5. Solicitar Pista (Lee las pistas reales del ejercicio creado por el docente)
         jButton6.addActionListener(e -> {
+            if (ejercicioActual == null) {
+                JOptionPane.showMessageDialog(this, "No hay un ejercicio activo para solicitar pistas.", "Aviso", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+
             contadorPistas++;
             String pistaMsg;
-            if (ejercicioActual.getPistas() != null && ejercicioActual.getPistas().size() >= contadorPistas) {
-                pistaMsg = "Pista " + contadorPistas + ": " + ejercicioActual.getPistas().get(contadorPistas - 1).getDescripcion();
-            } else {
-                if (contadorPistas == 1) {
-                    pistaMsg = "Pista 1: Identifica si es una integral directa o requiere sustitución.";
-                } else {
-                    pistaMsg = "Pista Final: Revisa si olvidaste dividir para el nuevo exponente.";
-                }
-            }
-            JOptionPane.showMessageDialog(this, pistaMsg, "Asistencia de MathFlow", JOptionPane.INFORMATION_MESSAGE);        });
+            List<Pista> pistasReales = ejercicioActual.getPistas();
 
+            if (pistasReales != null && !pistasReales.isEmpty() && pistasReales.size() >= contadorPistas) {
+                Pista p = pistasReales.get(contadorPistas - 1);
+                pistaMsg = "Pista " + p.getOrden() + ": " + p.getDescripcion();
+            } else {
+                pistaMsg = "No hay más pistas disponibles creadas para este ejercicio.";
+            }
+
+            JOptionPane.showMessageDialog(this, pistaMsg, "Asistencia de MathFlow", JOptionPane.INFORMATION_MESSAGE);
+        });
+
+        // 6. Modificar Perfil
         jButton7.addActionListener(e -> {
             String nuevoNom = JOptionPane.showInputDialog(this, "Modificar Perfil\nIngrese su nuevo nombre:", estudianteLogueado.getNombre());
             if (nuevoNom == null || nuevoNom.trim().isEmpty()) return;
@@ -102,14 +207,17 @@ public class EstudianteFrame extends javax.swing.JFrame {
 
             try {
                 int index = usuarioDao.listar().indexOf(estudianteLogueado);
-                if (index != -1) {
-                    estudianteLogueado.setNombre(nuevoNom);
-                    estudianteLogueado.setContrasena(nuevaContra);
-                    usuarioDao.editar(index, estudianteLogueado);
+                estudianteLogueado.setNombre(nuevoNom.trim());
+                estudianteLogueado.setContrasena(nuevaContra.trim());
 
-                    jLabel1.setText("Bienvenido, " + estudianteLogueado.getNombre());
-                    JOptionPane.showMessageDialog(this, "¡Perfil actualizado con éxito!", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+                if (index != -1) {
+                    usuarioDao.editar(index, estudianteLogueado);
                 }
+
+                jLabel1.setText("Bienvenido, " + estudianteLogueado.getNombre());
+                setTitle("MathFlow - Estudiante: " + estudianteLogueado.getNombre());
+                JOptionPane.showMessageDialog(this, "¡Perfil actualizado con éxito!", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+
             } catch (DAOException ex) {
                 JOptionPane.showMessageDialog(this, "Error en persistencia: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
             }
@@ -131,7 +239,7 @@ public class EstudianteFrame extends javax.swing.JFrame {
         jButton7 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setFont(new java.awt.Font("MathJax_Typewriter", 0, 14)); // NOI18N
+        setFont(new java.awt.Font("MathJax_Typewriter", 0, 14));
 
         jLabel1.setText("MathFlow - Panel de Estudiante");
 
@@ -222,29 +330,19 @@ public class EstudianteFrame extends javax.swing.JFrame {
 
         pack();
     }
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:initComponents
-        LoginFrame login = new LoginFrame();
-        login.setVisible(true);
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {
+        try {
+            LoginFrame login = new LoginFrame();
+            login.setVisible(true);
+        } catch (Exception ex) {
+            System.err.println("Redirigiendo a Login: " + ex.getMessage());
+        }
         this.dispose();
     }
 
     public static void main(String args[]) {
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (Exception ex) {
-            java.util.logging.Logger.getLogger(EstudianteFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new EstudianteFrame().setVisible(true);
-            }
-        });
+        java.awt.EventQueue.invokeLater(() -> new EstudianteFrame().setVisible(true));
     }
 
     private javax.swing.JButton jButton1;

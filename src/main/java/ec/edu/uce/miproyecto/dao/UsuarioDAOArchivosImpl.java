@@ -1,13 +1,14 @@
 package ec.edu.uce.miproyecto.dao;
 
-import ec.edu.uce.miproyecto.dominio.Usuario;
 import ec.edu.uce.miproyecto.dominio.Docente;
 import ec.edu.uce.miproyecto.dominio.Estudiante;
+import ec.edu.uce.miproyecto.dominio.Usuario;
+
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class UsuarioDAOArchivosImpl implements InterfaceDAO {
+public class UsuarioDAOArchivosImpl implements InterfaceDAO<Usuario> {
 
     private final String ARCHIVO = "usuarios.txt";
 
@@ -28,6 +29,7 @@ public class UsuarioDAOArchivosImpl implements InterfaceDAO {
         List<Usuario> lista = new ArrayList<>();
         File file = new File(ARCHIVO);
         if (!file.exists()) return lista;
+
         try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
             String linea;
             while ((linea = reader.readLine()) != null) {
@@ -38,12 +40,7 @@ public class UsuarioDAOArchivosImpl implements InterfaceDAO {
                     String email = datos[2];
                     String contra = datos[3];
 
-                    Usuario u;
-                    if ("Docente".equalsIgnoreCase(tipo)) {
-                        u = new Docente();
-                    } else {
-                        u = new Estudiante();
-                    }
+                    Usuario u = "Docente".equalsIgnoreCase(tipo) ? new Docente() : new Estudiante();
                     u.setNombre(nombre);
                     u.setEmail(email);
                     u.setContrasena(contra);
@@ -57,35 +54,26 @@ public class UsuarioDAOArchivosImpl implements InterfaceDAO {
     }
 
     @Override
-    public boolean nuevo(Object objeto) throws DAOException {
-        if (!(objeto instanceof Usuario)) {
-            throw new DAOException("El objeto ingresado no es un usuario válido.");
+    public boolean nuevo(Usuario nuevoUsuario) throws DAOException {
+        if (nuevoUsuario == null) {
+            throw new DAOException("El usuario ingresado no es válido.");
         }
 
-        Usuario nuevoUsuario = (Usuario) objeto;
         List<Usuario> usuarios = listar();
-
-        for (Usuario usuarioRegistrado : usuarios) {
-            if (usuarioRegistrado.getEmail().equalsIgnoreCase(
-                    nuevoUsuario.getEmail())) {
-
-                throw new DAOException(
-                        "El correo " + nuevoUsuario.getEmail()
-                                + " ya está registrado."
-                );
-            }
+        if (existe(nuevoUsuario)) {
+            throw new DAOException("El correo " + nuevoUsuario.getEmail() + " ya está registrado.");
         }
+
         usuarios.add(nuevoUsuario);
         guardarEnArchivo(usuarios);
-
         return true;
     }
 
     @Override
-    public boolean editar(int pos, Object objeto) throws DAOException {
+    public boolean editar(int pos, Usuario usuario) throws DAOException {
         List<Usuario> lista = listar();
         if (pos >= 0 && pos < lista.size()) {
-            lista.set(pos, (Usuario) objeto);
+            lista.set(pos, usuario);
             guardarEnArchivo(lista);
             return true;
         }
@@ -93,8 +81,8 @@ public class UsuarioDAOArchivosImpl implements InterfaceDAO {
     }
 
     @Override
-    public Object buscar(String credencial) throws DAOException {
-        List<Usuario> lista = listar(); // Lee con Reader
+    public Usuario buscar(String credencial) throws DAOException {
+        List<Usuario> lista = listar();
         for (Usuario u : lista) {
             if (u.getEmail().equalsIgnoreCase(credencial) || u.getNombre().equalsIgnoreCase(credencial)) {
                 return u;
@@ -104,9 +92,9 @@ public class UsuarioDAOArchivosImpl implements InterfaceDAO {
     }
 
     @Override
-    public boolean existe(Object objeto) {
+    public boolean existe(Usuario usuario) {
+        if (usuario == null) return false;
         List<Usuario> lista = listar();
-        Usuario usuario = (Usuario) objeto;
         for (Usuario u : lista) {
             if (u.getEmail().equalsIgnoreCase(usuario.getEmail())) {
                 return true;

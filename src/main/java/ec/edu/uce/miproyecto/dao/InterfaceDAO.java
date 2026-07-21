@@ -2,11 +2,11 @@ package ec.edu.uce.miproyecto.dao;
 
 import java.util.List;
 
-public interface InterfaceDAO {
-        public boolean nuevo(Object objeto) throws DAOException;
-        public boolean editar(int pos, Object objeto) throws DAOException;
-        public Object buscar(String credencial) throws DAOException;
-        public List listar();
-        public boolean existe(Object objeto);
-        public boolean eliminar(int pos) throws DAOException;
+public interface InterfaceDAO<T> {
+        boolean nuevo(T objeto) throws DAOException;
+        boolean editar(int pos, T objeto) throws DAOException;
+        T buscar(String credencial) throws DAOException;
+        List<T> listar();
+        boolean existe(T objeto);
+        boolean eliminar(int pos) throws DAOException;
 }

@@ -126,8 +126,9 @@ public class MenuPrincipal {
             if (usuarioLogueado instanceof Estudiante) {
                 Estudiante estudiante = (Estudiante) usuarioLogueado;
                 Consola.exitoLogin("ESTUDIANTE");
-                List<Ejercicio> ejercicios = Gestion.getEjercicios();
-
+                TemaDAO temaDao = new TemaDAOMemoriaImpl();
+                Tema temaActual = temaDao.buscar("Calculo Integral");
+                List<Ejercicio> ejercicios = temaActual.getEjercicios();
                 Ejercicio ejercicio = new Ejercicio("Integral de 2x", "x^2", "Fácil");
                 ejercicio.agregarPista(new Pista("Usa la regla de la potencia", 1));
                 ejercicio.agregarPista(new Pista("Suma uno al exponente y divide para el nuevo exponente", 2));
