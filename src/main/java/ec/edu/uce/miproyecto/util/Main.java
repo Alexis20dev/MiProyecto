@@ -1,0 +1,13 @@
+package ec.edu.uce.miproyecto.util;
+
+import ec.edu.uce.miproyecto.Gui.LoginFrame;
+import javax.swing.SwingUtilities;
+
+public class Main {
+    public static void main(String[] args) {
+        SwingUtilities.invokeLater(() -> {
+            LoginFrame login = new LoginFrame();
+            login.setVisible(true);
+        });
+    }
+}

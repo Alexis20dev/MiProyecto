@@ -1,0 +1,6 @@
+Docente,lara,lara@uce.edu.ec,1111
+Estudiante,Juan,fjks@uce.edu.ec,cuervo
+Docente,Sandier,sfmerizalde@uce.edu.ec,cuervo
+Estudiante,Sandier,sfmerzalde@uce.edu.ec,cuervo
+Estudiante,Sandier,sfmerizalde@uce.edu.ec,cuervo
+Estudiante,Fernando,fernando@uce.edu.ec,cuervo
