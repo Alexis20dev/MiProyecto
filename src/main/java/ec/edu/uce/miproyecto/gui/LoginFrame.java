@@ -1,15 +1,15 @@
-package ec.edu.uce.miproyecto.Gui;
+package ec.edu.uce.miproyecto.gui;
 
-import ec.edu.uce.miproyecto.Gui.DocenteFrame;
-import ec.edu.uce.miproyecto.Gui.EstudianteFrame;
+import ec.edu.uce.miproyecto.dao.DAOException;
 import ec.edu.uce.miproyecto.dao.InterfaceDAO;
 import ec.edu.uce.miproyecto.dao.UsuarioDAOFabrica;
-import ec.edu.uce.miproyecto.dao.DAOException;
-import ec.edu.uce.miproyecto.dominio.*;
+import ec.edu.uce.miproyecto.dominio.Docente;
+import ec.edu.uce.miproyecto.dominio.Ejercicio;
+import ec.edu.uce.miproyecto.dominio.Estudiante;
+import ec.edu.uce.miproyecto.dominio.Usuario;
 import ec.edu.uce.miproyecto.util.Validaciones; // <--- Importamos la clase de validaciones
 
 import javax.swing.*;
-import java.awt.*;
 import java.util.Date;
 
 public class LoginFrame extends JFrame {
@@ -198,7 +198,7 @@ public class LoginFrame extends JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
                 layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGroup(GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addGap(0, 0, Short.MAX_VALUE)
                                 .addComponent(txtEntrarR, GroupLayout.PREFERRED_SIZE, 111, GroupLayout.PREFERRED_SIZE)
                                 .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))

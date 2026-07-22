@@ -1,13 +1,13 @@
-package ec.edu.uce.miproyecto.Gui;
+package ec.edu.uce.miproyecto.gui;
 
-import ec.edu.uce.miproyecto.dominio.*;
 import ec.edu.uce.miproyecto.dao.*;
+import ec.edu.uce.miproyecto.dominio.*;
 
 import javax.swing.*;
 import java.awt.*;
 import java.util.List;
 
-public class DocenteFrame extends javax.swing.JFrame {
+public class DocenteFrame extends JFrame {
 
     private final InterfaceDAO usuarioDao = new UsuarioDAOFabrica().crearUsuarioDAO();
     private final TemaDAO temaDao = new TemaDAOMemoriaImpl();
@@ -187,17 +187,17 @@ public class DocenteFrame extends javax.swing.JFrame {
     @SuppressWarnings("unchecked")
     private void initComponents() {
 
-        jLabel1 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
-        jButtonEjercicio = new javax.swing.JButton();
-        jButtonConcepto = new javax.swing.JButton();
-        jButtonPista = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
+        jLabel1 = new JLabel();
+        jButton1 = new JButton();
+        jButtonEjercicio = new JButton();
+        jButtonConcepto = new JButton();
+        jButtonPista = new JButton();
+        jButton2 = new JButton();
+        jButton3 = new JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
-        jLabel1.setFont(new java.awt.Font("Dialog", 1, 14));
+        jLabel1.setFont(new Font("Dialog", 1, 14));
         jLabel1.setText("MathFlow - Panel de Docente");
 
         jButton1.setText("Gestionar Temas Académicos");
@@ -207,26 +207,26 @@ public class DocenteFrame extends javax.swing.JFrame {
         jButton2.setText("Modificar Perfil");
         jButton3.setText("Cerrar Sesión");
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        GroupLayout layout = new GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
 
         layout.setHorizontalGroup(
-                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                layout.createParallelGroup(GroupLayout.Alignment.LEADING)
                         .addGroup(layout.createSequentialGroup()
                                 .addGap(50, 50, 50)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                        .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 260, Short.MAX_VALUE)
-                                        .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(jButtonEjercicio, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(jButtonConcepto, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(jButtonPista, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING, false)
+                                        .addComponent(jLabel1, GroupLayout.DEFAULT_SIZE, 260, Short.MAX_VALUE)
+                                        .addComponent(jButton1, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(jButtonEjercicio, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(jButtonConcepto, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(jButtonPista, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(jButton2, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(jButton3, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                 .addContainerGap(50, Short.MAX_VALUE))
         );
 
         layout.setVerticalGroup(
-                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                layout.createParallelGroup(GroupLayout.Alignment.LEADING)
                         .addGroup(layout.createSequentialGroup()
                                 .addGap(25, 25, 25)
                                 .addComponent(jLabel1)
@@ -249,14 +249,14 @@ public class DocenteFrame extends javax.swing.JFrame {
     }
 
     public static void main(String args[]) {
-        java.awt.EventQueue.invokeLater(() -> new DocenteFrame().setVisible(true));
+        EventQueue.invokeLater(() -> new DocenteFrame().setVisible(true));
     }
 
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButtonEjercicio;
-    private javax.swing.JButton jButtonConcepto;
-    private javax.swing.JButton jButtonPista;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
+    private JLabel jLabel1;
+    private JButton jButton1;
+    private JButton jButtonEjercicio;
+    private JButton jButtonConcepto;
+    private JButton jButtonPista;
+    private JButton jButton2;
+    private JButton jButton3;
 }
