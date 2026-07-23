@@ -9,7 +9,7 @@ import java.util.List;
 
 public class EstudianteFrame extends JFrame {
 
-    private final InterfaceDAO usuarioDao = new UsuarioDAOFabrica().crearUsuarioDAO();
+    private final InterfaceDAO<Usuario> usuarioDao = new UsuarioDAOFabrica().crearUsuarioDAO();
     private final TemaDAO temaDao = new TemaDAOMemoriaImpl(); // Mismo DAO compartido
     private Estudiante estudianteLogueado;
     private Ejercicio ejercicioActual;

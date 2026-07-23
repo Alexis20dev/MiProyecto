@@ -7,4 +7,6 @@ import ec.edu.uce.miproyecto.dominio.Tema;
 public interface TemaDAO extends InterfaceDAO<Tema> {
     boolean agregarConcepto(Tema tema, Concepto concepto) throws DAOException;
     boolean agregarEjercicio(Tema tema, Ejercicio ejercicio) throws DAOException;
+    boolean eliminarConcepto(Tema tema, Concepto concepto) throws DAOException;
+    boolean eliminarEjercicio(Tema tema, Ejercicio ejercicio) throws DAOException;
 }

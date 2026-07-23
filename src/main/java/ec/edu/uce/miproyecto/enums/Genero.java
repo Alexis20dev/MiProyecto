@@ -17,4 +17,7 @@ public enum Genero {
     public String getAbreviacion(){
         return abreviacion;
     }
+
+    @Override
+    public String toString() {return  descripcion;}
 }

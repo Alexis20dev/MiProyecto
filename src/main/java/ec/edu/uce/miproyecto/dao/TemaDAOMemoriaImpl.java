@@ -47,6 +47,28 @@ public class TemaDAOMemoriaImpl implements TemaDAO {
     }
 
     @Override
+    public boolean eliminarConcepto(Tema tema, Concepto concepto) throws DAOException {
+        if (tema == null || concepto == null) {
+            throw new DAOException("El tema o el concepto no pueden ser nulos.");
+        }
+        if (!tema.getConceptos().remove(concepto)) {
+            throw new DAOException("El concepto no pertenece al tema seleccionado.");
+        }
+        return true;
+    }
+
+    @Override
+    public boolean eliminarEjercicio(Tema tema, Ejercicio ejercicio) throws DAOException {
+        if (tema == null || ejercicio == null) {
+            throw new DAOException("El tema o el ejercicio no pueden ser nulos.");
+        }
+        if (!tema.getEjercicios().remove(ejercicio)) {
+            throw new DAOException("El ejercicio no pertenece al tema seleccionado.");
+        }
+        return true;
+    }
+
+    @Override
     public boolean editar(int pos, Tema tema) throws DAOException {
         if (pos < 0 || pos >= temas.size()) {
             throw new DAOException("Posición fuera de rango.");

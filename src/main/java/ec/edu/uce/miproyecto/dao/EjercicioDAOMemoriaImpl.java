@@ -2,6 +2,8 @@ package ec.edu.uce.miproyecto.dao;
 
 import ec.edu.uce.miproyecto.dominio.Ejercicio;
 import ec.edu.uce.miproyecto.dominio.Gestion;
+import ec.edu.uce.miproyecto.dominio.Tema;
+
 import java.util.List;
 
 public class EjercicioDAOMemoriaImpl implements InterfaceDAO {
